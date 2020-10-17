@@ -13,7 +13,14 @@
       <pubDate>Sat, 17 Oct 2020 11:31:39 +0800</pubDate>
       
       <guid>https://www.hewei.in/posts/2020-10-hugo-blog-tutorial/</guid>
-      <description>创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo： 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件 记得在创建第二个 repo</description>
+      <description>&lt;h2 id=&#34;创建博客所需-repo&#34;&gt;创建博客所需 repo&lt;/h2&gt;
+&lt;p&gt;假设你在 GitHub 上的用户名是 &lt;code&gt;abcd&lt;/code&gt;，那么在 GitHub 上创建下面两个 repo：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个叫 &lt;code&gt;blog&lt;/code&gt;，用于存放 Hugo 博客的源文件&lt;/li&gt;
+&lt;li&gt;另一个叫 &lt;code&gt;abcd.github.io&lt;/code&gt;，用于存放 Hugo 编译生成的网页文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;记得在创建第二个 repo 的时候，至少选上 README、.gitignore、LICENSE 三个文件中的一个，这样创建出来的 repo 就不是空的。&lt;/p&gt;
+&lt;p&gt;如果不这样做，将第二个 repo 添加为第一个 repo 的子模块的操作就会失败，处理起来会很麻烦。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -22,7 +29,24 @@
       <pubDate>Thu, 08 Oct 2020 04:56:33 +0800</pubDate>
       
       <guid>https://www.hewei.in/posts/2020-10-nodejs-package-management/</guid>
-      <description>包管理器安装 安装 Node.js 时，会连同 npm 这个默认的包管理器一起安装上。 但平时使用的话，还是建议用 Yarn，安装这部分没什么好说的，下载安装包然后按照默认设置安装即可。 注：本文凡是提到 Yarn 的部分，均指 Yarn 1.X 版本。 第一</description>
+      <description>&lt;h2 id=&#34;包管理器安装&#34;&gt;包管理器安装&lt;/h2&gt;
+&lt;p&gt;安装 Node.js 时，会连同 npm 这个默认的包管理器一起安装上。&lt;/p&gt;
+&lt;p&gt;但平时使用的话，还是建议用 Yarn，安装这部分没什么好说的，下载安装包然后按照默认设置安装即可。&lt;/p&gt;
+&lt;p&gt;注：本文凡是提到 Yarn 的部分，均指 Yarn 1.X 版本。&lt;/p&gt;
+&lt;h2 id=&#34;第一时间配置下载源&#34;&gt;第一时间配置下载源&lt;/h2&gt;
+&lt;p&gt;用如下命令给 npm 和 Yarn 配置淘宝源，加速 npm 包下载。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# npm 配置淘宝源&lt;/span&gt;
+$ npm config &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;registry&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;https://registry.npm.taobao.org
+
+&lt;span class=&#34;c1&#34;&gt;# npm 查看源设置是否成功&lt;/span&gt;
+$ npm config get registry
+
+&lt;span class=&#34;c1&#34;&gt;# Yarn 配置淘宝源&lt;/span&gt;
+$ yarn config &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; registry https://registry.npm.taobao.org
+
+&lt;span class=&#34;c1&#34;&gt;# Yarn 查看源设置是否成功&lt;/span&gt;
+$ yarn config get registry
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -31,7 +55,22 @@
       <pubDate>Thu, 08 Oct 2020 04:31:20 +0800</pubDate>
       
       <guid>https://www.hewei.in/posts/2020-10-pm2-tutorial/</guid>
-      <description>PM2 不仅可以实现 Node.js 项目的持久化，还能实现代码的自动发布，在本机更改代码并推送到 GitHub 上之后，通过一行命令，就可以让服务端自动下载最新的代码并编译执行，以下是具体流程。 注意事项 每次升级 PM2 或者 Node.js 版本后，都要按文</description>
+      <description>&lt;p&gt;PM2 不仅可以实现 Node.js 项目的持久化，还能实现代码的自动发布，在本机更改代码并推送到 GitHub 上之后，通过一行命令，就可以让服务端自动下载最新的代码并编译执行，以下是具体流程。&lt;/p&gt;
+&lt;h2 id=&#34;注意事项&#34;&gt;注意事项&lt;/h2&gt;
+&lt;p&gt;每次升级 PM2 或者 Node.js 版本后，都要按文档 &lt;a href=&#34;https://pm2.keymetrics.io/docs/usage/update-pm2/&#34;&gt;Updating PM2&lt;/a&gt; 给出的标准流程来操作，保证不影响 PM2 所管理的项目。&lt;/p&gt;
+&lt;p&gt;另外，如果 Windows 下的 Node.js 程序是用 &lt;a href=&#34;https://stackoverflow.com/a/42770772/2667665&#34;&gt;Windows: Auto start PM2 and node apps&lt;/a&gt; 这里说的方法做的持久化，那么在升级 PM2 之后，Node.js 程序的持久化有可能失效。这样的话，就需要按照这里说的方法，将作为服务启动的 PM2 删除并重新新建才行。&lt;/p&gt;
+&lt;h3 id=&#34;升级-pm2&#34;&gt;升级 PM2&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 保存 PM2 项目列表及配置&lt;/span&gt;
+pm2 save
+
+&lt;span class=&#34;c1&#34;&gt;# 用 npm 或 yarn 升级全局安装的 PM2&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 更新到新版的 PM2&lt;/span&gt;
+pm2 update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;升级-nodejs&#34;&gt;升级 Node.js&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ pm2 unstartup
+$ pm2 startup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -40,7 +79,29 @@
       <pubDate>Wed, 30 Sep 2020 10:08:00 +0800</pubDate>
       
       <guid>https://www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</guid>
-      <description>课程链接：https://time.geekbang.org/column/intro/81 第二遍阅读时，选出每篇文章的优质留言 01 | 架构到底是指什么？ 课程链接：https://time.geekban</description>
+      <description>&lt;ul&gt;
+&lt;li&gt;课程链接：&lt;a href=&#34;https://time.geekbang.org/column/intro/81&#34;&gt;https://time.geekbang.org/column/intro/81&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;第二遍阅读时，选出每篇文章的优质留言&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;01--架构到底是指什么&#34;&gt;01 | 架构到底是指什么？&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;课程链接：&lt;a href=&#34;https://time.geekbang.org/column/article/6458&#34;&gt;https://time.geekbang.org/column/article/6458&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;系统与子系统&#34;&gt;系统与子系统&lt;/h3&gt;
+&lt;p&gt;系统：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由一群&lt;strong&gt;有关联的个体&lt;/strong&gt;（如汽车的发动机、底盘、轮胎等各部分），&lt;/li&gt;
+&lt;li&gt;根据&lt;strong&gt;某种规则运作&lt;/strong&gt;（如发动机产生动力，变速器和传动轴传输动力），&lt;/li&gt;
+&lt;li&gt;能完成个别元件不能单独完成的工作的&lt;strong&gt;群体&lt;/strong&gt;（系统不是个体能力的简单加和，而是产生新的能力，比如汽车各部分组合起来之后，才能载重前进）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;子系统和系统的定义其实一样，只是观察的角度不同，一个系统可能是另一个更大系统的子系统。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;比如微信本身是一个大系统，包含聊天、登录、支付、朋友圈等子系统。&lt;/li&gt;
+&lt;li&gt;朋友圈这个系统又进一步包含动态、评论、点赞等子系统。&lt;/li&gt;
+&lt;li&gt;评论这个系统又进一步包含防刷子系统、审核子系统、发布子系统、存储子系统。&lt;/li&gt;
+&lt;li&gt;评论审核子系统不再包含&lt;strong&gt;业务意义上&lt;/strong&gt;的子系统，而是包括各个模块或组件，这些模块或组件可能也是另一个维度上的系统。比如 MySQL、Redis 是存储系统，但不是业务子系统。&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
   </channel>

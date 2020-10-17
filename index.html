@@ -38,6 +38,22 @@
     <div class="site_nav" id="site_nav">
         <ul>
             
+            <li>
+                <a href="/">首页</a>
+            </li>
+            
+            <li>
+                <a href="/posts/">归档</a>
+            </li>
+            
+            <li>
+                <a href="/tags/">标签</a>
+            </li>
+            
+            <li>
+                <a href="/about/">我</a>
+            </li>
+            
         </ul>
     </div>
     <div class="menu_icon">
@@ -77,7 +93,14 @@
     
     <div class="list">
         <div class="post_content markdown">
-            <p>创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo： 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件 记得在创建第二个 repo......</p>
+            <p><h2 id="创建博客所需-repo">创建博客所需 repo</h2>
+<p>假设你在 GitHub 上的用户名是 <code>abcd</code>，那么在 GitHub 上创建下面两个 repo：</p>
+<ul>
+<li>一个叫 <code>blog</code>，用于存放 Hugo 博客的源文件</li>
+<li>另一个叫 <code>abcd.github.io</code>，用于存放 Hugo 编译生成的网页文件</li>
+</ul>
+<p>记得在创建第二个 repo 的时候，至少选上 README、.gitignore、LICENSE 三个文件中的一个，这样创建出来的 repo 就不是空的。</p>
+<p>如果不这样做，将第二个 repo 添加为第一个 repo 的子模块的操作就会失败，处理起来会很麻烦。</p>......</p>
         </div>
     </div>
     
@@ -101,7 +124,24 @@
     
     <div class="list">
         <div class="post_content markdown">
-            <p>包管理器安装 安装 Node.js 时，会连同 npm 这个默认的包管理器一起安装上。 但平时使用的话，还是建议用 Yarn，安装这部分没什么好说的，下载安装包然后按照默认设置安装即可。 注：本文凡是提到 Yarn 的部分，均指 Yarn 1.X 版本。 第一......</p>
+            <p><h2 id="包管理器安装">包管理器安装</h2>
+<p>安装 Node.js 时，会连同 npm 这个默认的包管理器一起安装上。</p>
+<p>但平时使用的话，还是建议用 Yarn，安装这部分没什么好说的，下载安装包然后按照默认设置安装即可。</p>
+<p>注：本文凡是提到 Yarn 的部分，均指 Yarn 1.X 版本。</p>
+<h2 id="第一时间配置下载源">第一时间配置下载源</h2>
+<p>用如下命令给 npm 和 Yarn 配置淘宝源，加速 npm 包下载。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># npm 配置淘宝源</span>
+$ npm config <span class="nb">set</span> <span class="nv">registry</span><span class="o">=</span>https://registry.npm.taobao.org
+
+<span class="c1"># npm 查看源设置是否成功</span>
+$ npm config get registry
+
+<span class="c1"># Yarn 配置淘宝源</span>
+$ yarn config <span class="nb">set</span> registry https://registry.npm.taobao.org
+
+<span class="c1"># Yarn 查看源设置是否成功</span>
+$ yarn config get registry
+</code></pre></div>......</p>
         </div>
     </div>
     
@@ -125,7 +165,22 @@
     
     <div class="list">
         <div class="post_content markdown">
-            <p>PM2 不仅可以实现 Node.js 项目的持久化，还能实现代码的自动发布，在本机更改代码并推送到 GitHub 上之后，通过一行命令，就可以让服务端自动下载最新的代码并编译执行，以下是具体流程。 注意事项 每次升级 PM2 或者 Node.js 版本后，都要按文......</p>
+            <p><p>PM2 不仅可以实现 Node.js 项目的持久化，还能实现代码的自动发布，在本机更改代码并推送到 GitHub 上之后，通过一行命令，就可以让服务端自动下载最新的代码并编译执行，以下是具体流程。</p>
+<h2 id="注意事项">注意事项</h2>
+<p>每次升级 PM2 或者 Node.js 版本后，都要按文档 <a href="https://pm2.keymetrics.io/docs/usage/update-pm2/">Updating PM2</a> 给出的标准流程来操作，保证不影响 PM2 所管理的项目。</p>
+<p>另外，如果 Windows 下的 Node.js 程序是用 <a href="https://stackoverflow.com/a/42770772/2667665">Windows: Auto start PM2 and node apps</a> 这里说的方法做的持久化，那么在升级 PM2 之后，Node.js 程序的持久化有可能失效。这样的话，就需要按照这里说的方法，将作为服务启动的 PM2 删除并重新新建才行。</p>
+<h3 id="升级-pm2">升级 PM2</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 保存 PM2 项目列表及配置</span>
+pm2 save
+
+<span class="c1"># 用 npm 或 yarn 升级全局安装的 PM2</span>
+
+<span class="c1"># 更新到新版的 PM2</span>
+pm2 update
+</code></pre></div><h3 id="升级-nodejs">升级 Node.js</h3>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ pm2 unstartup
+$ pm2 startup
+</code></pre></div>......</p>
         </div>
     </div>
     
@@ -149,7 +204,29 @@
     
     <div class="list">
         <div class="post_content markdown">
-            <p>课程链接：https://time.geekbang.org/column/intro/81 第二遍阅读时，选出每篇文章的优质留言 01 | 架构到底是指什么？ 课程链接：https://time.geekban......</p>
+            <p><ul>
+<li>课程链接：<a href="https://time.geekbang.org/column/intro/81">https://time.geekbang.org/column/intro/81</a></li>
+<li>第二遍阅读时，选出每篇文章的优质留言</li>
+</ul>
+<hr>
+<h2 id="01--架构到底是指什么">01 | 架构到底是指什么？</h2>
+<ul>
+<li>课程链接：<a href="https://time.geekbang.org/column/article/6458">https://time.geekbang.org/column/article/6458</a></li>
+</ul>
+<h3 id="系统与子系统">系统与子系统</h3>
+<p>系统：</p>
+<ul>
+<li>由一群<strong>有关联的个体</strong>（如汽车的发动机、底盘、轮胎等各部分），</li>
+<li>根据<strong>某种规则运作</strong>（如发动机产生动力，变速器和传动轴传输动力），</li>
+<li>能完成个别元件不能单独完成的工作的<strong>群体</strong>（系统不是个体能力的简单加和，而是产生新的能力，比如汽车各部分组合起来之后，才能载重前进）。</li>
+</ul>
+<p>子系统和系统的定义其实一样，只是观察的角度不同，一个系统可能是另一个更大系统的子系统。</p>
+<ul>
+<li>比如微信本身是一个大系统，包含聊天、登录、支付、朋友圈等子系统。</li>
+<li>朋友圈这个系统又进一步包含动态、评论、点赞等子系统。</li>
+<li>评论这个系统又进一步包含防刷子系统、审核子系统、发布子系统、存储子系统。</li>
+<li>评论审核子系统不再包含<strong>业务意义上</strong>的子系统，而是包括各个模块或组件，这些模块或组件可能也是另一个维度上的系统。比如 MySQL、Redis 是存储系统，但不是业务子系统。</li>
+</ul>......</p>
         </div>
     </div>
     

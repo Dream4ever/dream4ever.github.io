@@ -12,7 +12,10 @@
 	
     
     
-    <meta name="description" content="创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo： 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件 记得在创建第二个 repo" />
+    <meta name="description" content="创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo：
+ 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件  记得在创建第二个 repo 的时候，至少选上 README、.gitignore、LICENSE 三个文件中的一个，这样创建出来的 repo 就不是空的。
+如果不这样做，将第二个 repo 添加为第一个 repo 的子模块的操作就会失败，处理起来会很麻烦。
+" />
     
 
     
@@ -36,6 +39,22 @@
         <div class="nav_container animated fadeInDown">
     <div class="site_nav" id="site_nav">
         <ul>
+            
+            <li>
+                <a href="/">首页</a>
+            </li>
+            
+            <li>
+                <a href="/posts/">归档</a>
+            </li>
+            
+            <li>
+                <a href="/tags/">标签</a>
+            </li>
+            
+            <li>
+                <a href="/about/">我</a>
+            </li>
             
         </ul>
     </div>
@@ -145,8 +164,7 @@ $ ./deploy.sh <span class="s2">&#34;首次用脚本自动发布博客&#34;</span
 <li><a href="https://gohugo.io/getting-started/quick-start/">Quick Start | Hugo</a></li>
 <li><a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">Host on GitHub | Hugo</a></li>
 <li><a href="https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site">Managing a custom domain for your GitHub Pages site</a></li>
-</ul>
-</div>
+</ul></div>
                     <div class="post_footer">
                         
                     </div>
