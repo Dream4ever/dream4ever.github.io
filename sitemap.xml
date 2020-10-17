@@ -33,6 +33,11 @@
   </url>
   
   <url>
+    <loc>https://www.hewei.in/about/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://www.hewei.in/categories/</loc>
   </url>
   
