@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>www.hewei.in/posts/2020-10-hugo-blog-tutorial/</loc>
+    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/posts/</loc>
+    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/</loc>
+    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/posts/2020-10-nodejs-package-management/</loc>
+    <lastmod>2020-10-08T04:56:33+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/posts/2020-10-pm2-tutorial/</loc>
+    <lastmod>2020-10-08T04:31:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</loc>
+    <lastmod>2020-09-30T10:08:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>www.hewei.in/tags/</loc>
+  </url>
+  
+</urlset>

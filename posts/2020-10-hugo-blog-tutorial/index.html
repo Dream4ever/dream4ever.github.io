@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-us" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="何伟" />
+	
+	
+	
+	<title>Hugo 博客配置教程 ｜ 岁月留痕</title>
+	
+    
+    
+    <meta name="description" content="创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo： 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件 记得在创建这两个 repo" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="www.hewei.in/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="www.hewei.in/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="www.hewei.in/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="www.hewei.in/css/highlight.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="www.hewei.in/">
+                    <span>岁月留痕</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/Dream4ever" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                <a href="www.hewei.in/index.xml" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='www.hewei.in/posts/2020-10-hugo-blog-tutorial/'>Hugo 博客配置教程</a></h2>
+                        <span class="date">2020.10.17</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="创建博客所需-repo">创建博客所需 repo</h2>
+<p>假设你在 GitHub 上的用户名是 <code>abcd</code>，那么在 GitHub 上创建下面两个 repo：</p>
+<ul>
+<li>一个叫 <code>blog</code>，用于存放 Hugo 博客的源文件</li>
+<li>另一个叫 <code>abcd.github.io</code>，用于存放 Hugo 编译生成的网页文件</li>
+</ul>
+<p>记得在创建这两个 repo 的时候，至少选上 README、.gitignore、LICENSE 三个文件中的一个，这样创建出来的 repo 就不是空的，以免影响后续操作。</p>
+<h2 id="配置源文件-repo">配置源文件 repo</h2>
+<p>依次执行以下命令：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将 repo clone 至本机 blog 文件夹中</span>
+$ git clone https://github.com/abcd/blog.git
+<span class="c1"># 用 blog 文件夹生成 Hugo 博客的初始内容</span>
+$ hugo new site blog --force
+<span class="c1"># 将博客主题添加为 blog 这个 repo 的子模块</span>
+<span class="c1"># 这样两者互不影响</span>
+$ <span class="nb">cd</span> blog
+$ git submodule add https://github.com/varkai/hugo-theme-zozo themes/zozo
+<span class="nb">echo</span> <span class="s1">&#39;theme = &#34;zozo&#34;&#39;</span> &gt;&gt; config.toml
+</code></pre></div><h1 id="配置最终网页-repo">配置最终网页 repo</h1>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将 public 文件夹与 repo abcd.github.io 相关联</span>
+$ git submodule add -b main https://github.com/abcd/dream4ever.github.io.git public
+</code></pre></div><h2 id="使用自动发布博客的脚本">使用自动发布博客的脚本</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="cp">#!/bin/sh
+</span><span class="cp"></span>
+<span class="c1"># If a command fails then the deploy stops</span>
+<span class="nb">set</span> -e
+
+<span class="nb">printf</span> <span class="s2">&#34;\033[0;32mDeploying updates to GitHub...\033[0m\n&#34;</span>
+
+<span class="c1"># Build the project.</span>
+<span class="c1"># 使用指定的主题编译博客</span>
+hugo -t zozo <span class="c1"># if using a theme, replace with `hugo -t &lt;YOURTHEME&gt;`</span>
+
+<span class="c1"># Go To Public folder</span>
+<span class="nb">cd</span> public
+
+<span class="c1"># Add changes to git.</span>
+git add .
+
+<span class="c1"># Commit changes.</span>
+<span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;rebuilding site </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+	<span class="nv">msg</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$*</span><span class="s2">&#34;</span>
+<span class="k">fi</span>
+git commit -m <span class="s2">&#34;</span><span class="nv">$msg</span><span class="s2">&#34;</span>
+
+<span class="c1"># Push source and build repos.</span>
+<span class="c1"># 2020-10-17：注意：现在 GitHub 的主分支已经改名为 main</span>
+git push origin main
+</code></pre></div><p>然后再执行下面的命令，来测试脚本是否可用</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 首次执行，需为脚本开启对应权限</span>
+$ chmod +x deploy.sh
+<span class="c1"># 调用脚本，发布博客</span>
+$ ./deploy.sh <span class="s2">&#34;首次用脚本自动发布博客&#34;</span>
+</code></pre></div></div>
+                    <div class="post_footer">
+                        
+                    </div>
+                </div>
+                
+                
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: '6kGh7JpRLb89n7mDsx4LmntN-gzGzoHsz',
+        appKey: 'kWKa5LtKrMR1sMPfRl5Wzx4r',
+        placeholder: '',
+        visitor: 'true',
+    })
+</script>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="www.hewei.in/js/jquery-3.5.1.min.js"></script>
+<link href="www.hewei.in/css/fancybox.min.css" rel="stylesheet">
+<script src="www.hewei.in/js/fancybox.min.js"></script>
+<script src="www.hewei.in/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>

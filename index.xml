@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>岁月留痕</title>
+    <link>www.hewei.in/</link>
+    <description>Recent content on 岁月留痕</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 17 Oct 2020 11:31:39 +0800</lastBuildDate><atom:link href="www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo 博客配置教程</title>
+      <link>www.hewei.in/posts/2020-10-hugo-blog-tutorial/</link>
+      <pubDate>Sat, 17 Oct 2020 11:31:39 +0800</pubDate>
+      
+      <guid>www.hewei.in/posts/2020-10-hugo-blog-tutorial/</guid>
+      <description>创建博客所需 repo 假设你在 GitHub 上的用户名是 abcd，那么在 GitHub 上创建下面两个 repo： 一个叫 blog，用于存放 Hugo 博客的源文件 另一个叫 abcd.github.io，用于存放 Hugo 编译生成的网页文件 记得在创建这两个 repo</description>
+    </item>
+    
+    <item>
+      <title>Node.js 包管理</title>
+      <link>www.hewei.in/posts/2020-10-nodejs-package-management/</link>
+      <pubDate>Thu, 08 Oct 2020 04:56:33 +0800</pubDate>
+      
+      <guid>www.hewei.in/posts/2020-10-nodejs-package-management/</guid>
+      <description>包管理器安装 安装 Node.js 时，会连同 npm 这个默认的包管理器一起安装上。 但平时使用的话，还是建议用 Yarn，安装这部分没什么好说的，下载安装包然后按照默认设置安装即可。 注：本文凡是提到 Yarn 的部分，均指 Yarn 1.X 版本。 第一</description>
+    </item>
+    
+    <item>
+      <title>用 PM2 管理 Node.js 后端项目</title>
+      <link>www.hewei.in/posts/2020-10-pm2-tutorial/</link>
+      <pubDate>Thu, 08 Oct 2020 04:31:20 +0800</pubDate>
+      
+      <guid>www.hewei.in/posts/2020-10-pm2-tutorial/</guid>
+      <description>PM2 不仅可以实现 Node.js 项目的持久化，还能实现代码的自动发布，在本机更改代码并推送到 GitHub 上之后，通过一行命令，就可以让服务端自动下载最新的代码并编译执行，以下是具体流程。 注意事项 每次升级 PM2 或者 Node.js 版本后，都要按文</description>
+    </item>
+    
+    <item>
+      <title>《从0开始学架构》学习笔记</title>
+      <link>www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</link>
+      <pubDate>Wed, 30 Sep 2020 10:08:00 +0800</pubDate>
+      
+      <guid>www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</guid>
+      <description>课程链接：https://time.geekbang.org/column/intro/81 第二遍阅读时，选出每篇文章的优质留言 01 | 架构到底是指什么？ 课程链接：https://time.geekban</description>
+    </item>
+    
+  </channel>
+</rss>
