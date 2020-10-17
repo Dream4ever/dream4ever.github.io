@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="何伟" />
+	
+	
+	
+	<title>Docker 中部署 GitLab ｜ 岁月留痕</title>
+	
+    
+    
+    <meta name="description" content="下载 GitLab 镜像 docker pull gitlab/gitlab-ce 镜像链接：https://hub.docker.com/r/gitlab/gitlab-ce/
+安装 Docker Compose 官方教程：Install Docker Compose
+创建 docker-compose 配置文件 在主机的 /etc/gitlab 目录下创建 GitLab 容器的配置文件 docker-compose.yml。
+web: image: &amp;#39;gitlab/gitlab-ce:latest&amp;#39; container_name: gitlab restart: always hostname: &amp;#39;code.upp.com&amp;#39; environment: GITLAB_OMNIBUS_CONFIG: | external_url &amp;#39;http://code.upp.com&amp;#39; gitlab_rails[&amp;#39;gitlab_email_from&amp;#39;] = &amp;#39;username@mail.domain.com&amp;#39; gitlab_rails[&amp;#39;smtp_enable&amp;#39;] = true gitlab_rails[&amp;#39;smtp_address&amp;#39;] = &amp;#34;smtpdm.aliyun.com&amp;#34; gitlab_rails[&amp;#39;smtp_port&amp;#39;] = 80 gitlab_rails[&amp;#39;smtp_user_name&amp;#39;] = &amp;#34;username@mail.domain.com&amp;#34; gitlab_rails[&amp;#39;smtp_password&amp;#39;] = &amp;#34;smtp_password&amp;#34; gitlab_rails[&amp;#39;smtp_domain&amp;#39;] = &amp;#34;mail.domain.com&amp;#34; gitlab_rails[&amp;#39;smtp_authentication&amp;#39;] = &amp;#34;login&amp;#34; ports: - &amp;#39;80:80&amp;#39; - &amp;#39;443:443&amp;#39; volumes: - &amp;#39;$GITLAB_HOME/config:/etc/gitlab&amp;#39; - &amp;#39;$GITLAB_HOME/logs:/var/log/gitlab&amp;#39; - &amp;#39;$GITLAB_HOME/data:/var/opt/gitlab&amp;#39; 同时修改电脑上的 DNS，设置 code.upp.com 为运行 GitLab 服务器所对应的 IP。
+" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://www.hewei.in/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/highlight.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/">首页</a>
+            </li>
+            
+            <li>
+                <a href="/posts/">归档</a>
+            </li>
+            
+            <li>
+                <a href="/tags/">标签</a>
+            </li>
+            
+            <li>
+                <a href="/about/">我</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://www.hewei.in/">
+                    <span>岁月留痕</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/Dream4ever" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                <a href="https://www.hewei.in/index.xml" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/posts/2020-07-config-gitlab-in-docker/'>Docker 中部署 GitLab</a></h2>
+                        <span class="date">2020.07.20</span>
+                    </div>
+                    <div class="post_content markdown"><h2 id="下载-gitlab-镜像">下载 GitLab 镜像</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker pull gitlab/gitlab-ce
+</code></pre></div><p>镜像链接：<a href="https://hub.docker.com/r/gitlab/gitlab-ce/">https://hub.docker.com/r/gitlab/gitlab-ce/</a></p>
+<h2 id="安装-docker-compose">安装 Docker Compose</h2>
+<p>官方教程：<a href="https://docs.docker.com/compose/install/">Install Docker Compose</a></p>
+<h2 id="创建-docker-compose-配置文件">创建 docker-compose 配置文件</h2>
+<p>在主机的 <code>/etc/gitlab</code> 目录下创建 GitLab 容器的配置文件 <code>docker-compose.yml</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">web:
+  image: <span class="s1">&#39;gitlab/gitlab-ce:latest&#39;</span>
+  container_name: gitlab
+  restart: always
+  hostname: <span class="s1">&#39;code.upp.com&#39;</span>
+  environment:
+    GITLAB_OMNIBUS_CONFIG: <span class="p">|</span>
+      external_url <span class="s1">&#39;http://code.upp.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;username@mail.domain.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtpdm.aliyun.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">80</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;username@mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtp_password&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;login&#34;</span>
+  ports:
+    - <span class="s1">&#39;80:80&#39;</span>
+    - <span class="s1">&#39;443:443&#39;</span>
+  volumes:
+    - <span class="s1">&#39;$GITLAB_HOME/config:/etc/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/logs:/var/log/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/data:/var/opt/gitlab&#39;</span>
+</code></pre></div><p>同时修改电脑上的 DNS，设置 <code>code.upp.com</code> 为运行 GitLab 服务器所对应的 IP。</p>
+<h3 id="配置文件说明">配置文件说明</h3>
+<p><code>container_name</code> 参数用于指定容器名称。</p>
+<p><code>hostname</code> 参数用于指定主机名称，如果是自定义的域名，并且不是在公网上注册的，那么就需要修改 DNS，使其生效。</p>
+<p><code>GITLAB_OMNIBUS_CONFIG</code> 中的参数为启动容器时加载的环境变量，并不会写入容器里的配置文件中。</p>
+<p><code>external_url</code> 参数用于指定容器对外暴露的 URL，可以是 IP，也可以是域名，另外也可以指定是 http 协议还是 https 协议。</p>
+<p><code>gitlab_rails['gitlab_email_from']</code> 和 <code>gitlab_rails['smtp</code> 开头的参数，用于实现 GitLab 的邮件功能。</p>
+<p>因为想要让 GitLab 上的每个 commit 所对应的用户和 GitHub 一样的话，就需要配置 GitLab 中所用账号的主邮箱。</p>
+<p>在阿里云的“邮件推送”业务中，按照指引配置发信邮箱 <code>username@mail.domain.com</code>，其中的 <code>domain</code> 是一级域名，<code>mail</code> 是二级域名，<code>username</code> 是账号名。新建好邮箱之后，记得还要设置 SMTP 密码，下面会用到。</p>
+<p>然后按照 GitLab 官方文档，配置邮件推送功能的各个参数。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">      external_url <span class="s1">&#39;http://code.upp.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;username@mail.domain.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtpdm.aliyun.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">80</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;username@mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtp_password&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;login&#34;</span>
+</code></pre></div><p>参考链接：<a href="https://docs.gitlab.com/omnibus/settings/smtp.html">SMTP settings | GitLab</a></p>
+<h2 id="修改-dns">修改 DNS</h2>
+<p>在 Windows 下，修改 <code>c:\Windows\System32\drivers\etc\hosts</code> 文件，添加 <code>code.upp.com</code> 域名与对应服务器 IP 之间的映射关系，这样在本机才能够正常访问到服务器上的 GitLab。</p>
+<p>记得修改完 DNS 设置之后，在命令行中执行 <code>ipconfig /flushdns</code>，以使新的设置生效。</p>
+<h2 id="启动容器并查看进度">启动容器并查看进度</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 设置 GitLab 环境变量</span>
+<span class="nb">export</span> <span class="nv">GITLAB_HOME</span><span class="o">=</span>/srv/gitlab
+<span class="c1"># 进入 docker-compose.yml 文件所在目录</span>
+<span class="nb">cd</span> /etc/gitlab
+<span class="c1"># 启动 GitLab 容器</span>
+docker-compose up -d
+<span class="c1"># 查看启动进度</span>
+docker logs -f gitlab
+</code></pre></div><p>Docker 运行起来之后（状态为 healthy，而不是 Starting），如果报 422 错误，可能是浏览器缓存问题，清空缓存试试，或者用隐私模式访问，或者等会儿再访问。</p>
+<p>如果用上面配置的 <code>code.upp.com</code> 域名能够成功访问 GitLab，就说明容器启动成功。</p>
+<h2 id="启用主邮箱">启用主邮箱</h2>
+<p>前面已经配置好了 GitLab 的邮件功能，接下来再配置具体的主邮箱，打开 <code>http://code.upp.com/profile/emails</code>，填入自己在 GitHub 上的邮箱，然后根据指引，完成该邮箱的认证。</p>
+<p>接着在 <code>http://code.upp.com/profile</code> 路径中，选中认证成功的主邮箱，并设置对应的用户名，OK，大功告成！</p>
+<h2 id="启用-httpsgit-lfs-需要">启用 HTTPS（Git-lfs 需要）</h2>
+<h3 id="创建并验证-ssl-证书">创建并验证 SSL 证书</h3>
+<p>在容器中创建存放证书的文件夹并设置所需权限：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker <span class="nb">exec</span> -it gitlab bash
+mkdir -p /etc/gitlab/ssl
+chmod <span class="m">755</span> /etc/gitlab/ssl
+</code></pre></div><p>按照 <a href="https://stackoverflow.com/a/60516812/2667665">Getting Chrome to accept self-signed localhost certificate</a> 链接中的方法，创建自己的 CA 根证书，并用其签发 SSL 证书。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1">######################</span>
+<span class="c1"># Become a Certificate Authority</span>
+<span class="c1">######################</span>
+
+<span class="c1"># Generate private key and set passphrase for it</span>
+openssl genrsa -des3 -out ca.key <span class="m">2048</span>
+<span class="c1"># Generate root certificate</span>
+openssl req -x509 -new -nodes -key ca.key -sha256 -days <span class="m">365</span> -out ca.pem
+
+<span class="c1">######################</span>
+<span class="c1"># Create CA-signed certs</span>
+<span class="c1">######################</span>
+
+<span class="c1"># Use your own domain name</span>
+<span class="nv">NAME</span><span class="o">=</span>code.upp.com
+<span class="c1"># Generate a private key</span>
+openssl genrsa -out <span class="nv">$NAME</span>.key <span class="m">2048</span>
+<span class="c1"># Create a certificate-signing request</span>
+openssl req -new -key <span class="nv">$NAME</span>.key -out <span class="nv">$NAME</span>.csr
+<span class="c1"># Create a config file for the extensions</span>
+<span class="c1"># For DNS.1: Be sure to include the domain name here because Common Name is not so commonly honoured by itself</span>
+<span class="c1"># For IP.1: Optionally, add an IP address (if the connection which you have planned requires it)</span>
+&gt;<span class="nv">$NAME</span>.ext cat <span class="s">&lt;&lt;-EOF
+</span><span class="s">authorityKeyIdentifier=keyid,issuer
+</span><span class="s">basicConstraints=CA:FALSE
+</span><span class="s">keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+</span><span class="s">subjectAltName = @alt_names
+</span><span class="s">[alt_names]
+</span><span class="s">DNS.1 = $NAME
+</span><span class="s">IP.1 = 1.2.3.4
+</span><span class="s">EOF</span>
+<span class="c1"># Create the signed certificate</span>
+openssl x509 -req -in <span class="nv">$NAME</span>.csr -CA ca.pem -CAkey ca.key -CAcreateserial <span class="se">\
+</span><span class="se"></span>-out <span class="nv">$NAME</span>.crt -days <span class="m">365</span> -sha256 -extfile <span class="nv">$NAME</span>.ext
+</code></pre></div><p>创建完证书之后，再用下面的命令验证所创建的证书是否有效：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">openssl verify -CAfile ca.pem -verify_hostname code.upp.com code.upp.com.crt
+</code></pre></div><h3 id="应用-ssl-证书">应用 SSL 证书</h3>
+<p>编辑 GitLab 容器中的配置文件 <code>/etc/gitlab/gitlab.rb</code>：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将 http 协议改为 https 协议</span>
+external_url <span class="s1">&#39;https://code.upp.com&#39;</span>
+
+<span class="c1"># 强制从 http 跳转至 https</span>
+nginx<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+nginx<span class="o">[</span><span class="s1">&#39;redirect_http_to_https&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+nginx<span class="o">[</span><span class="s1">&#39;redirect_http_to_https_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">80</span>
+
+<span class="c1"># 明确设置 CA 根证书的路径</span>
+nginx<span class="o">[</span><span class="s1">&#39;ssl_client_certificate&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;/etc/gitlab/ssl/ca.crt&#34;</span>
+
+<span class="c1"># 禁用 Let&#39;s Encrypt，以免在应用新的配置文件时 GitLab 再用其申请 SSL 证书</span>
+letsencrypt<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+</code></pre></div><p>然后在容器中执行 <code>gitlab-ctl reconfigure</code>，应用修改后的配置。</p>
+<p>参考链接：<a href="https://docs.gitlab.com/omnibus/settings/nginx.html">NGINX settings | GitLab</a></p>
+<h3 id="在浏览器中导入-ca-证书">在浏览器中导入 CA 证书</h3>
+<p>因为自定义域名的 SSL 证书是用 CA 证书签发的，所以需要在本机浏览器中导入 CA 证书，这样才能够让自定义域名的 SSL 证书被浏览器视为可信证书。</p>
+<p>先在主机中将容器中的 CA 证书复制出来：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">cd</span> /etc/gitlab <span class="o">&amp;&amp;</span> docker cp gitlab:/etc/gitlab/ssl/ca.pem .
+</code></pre></div><p>然后再用 XFTP 之类的工具将 CA 证书 <code>ca.pem</code> 从 CentOS 服务器上复制到本机。</p>
+<blockquote>
+<p>注意，这个 pem 格式的 CA 证书如果直接导入到 Windows 上的 Chrome 中的话，并不会被浏览器信任，还需要将其转换为 p7b 格式的证书才行。
+另外，在将证书导入到 “受信任的根证书颁发机构” 时，虽然导入对话框中默认显示的是 “受信任的根证书颁发机构”，但默认导入的路径实际上并不是它。所以在每次导入时，一定要手动选择具体的导入路径，才能够保证没有被导入到别的地方。</p>
+</blockquote>
+<p>先在 Chrome 的 “设置 → 隐私设置和安全性 → 安全 → 高级安全设置 → 管理证书” 中，将 pem 格式的证书导入到 “受信任的根证书颁发机构”，然后再将该证书从浏览器中导出，格式选择 “加密消息语法标准 - PKCS #7 证书(.P7B)”。</p>
+<p>然后将已经导入的 pem 格式的证书从 “受信任的根证书颁发机构” 中删除，因为它不会被 Chrome 信任。再将新导出的 p7b 格式的证书导入至 “受信任的根证书颁发机构” 中。</p>
+<p>接着再重启浏览器，这一步必须做，这样才能够让浏览器加载新的证书。如果标志着 SSL 证书有效的小锁显示在网址的左边，就说明证书配置成功。</p>
+<h3 id="禁用-git-对-ssl-证书的检查">禁用 Git 对 SSL 证书的检查</h3>
+<p>输入下面这条命令，就可以在 git push/pull 的时候，不去检查 SSL 证书，这样刚才创建的证书就可以通行无阻了。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">git config --global http.sslVerify <span class="nb">false</span>
+</code></pre></div><p>参考链接：<a href="https://forum.gitlab.com/t/trusted-ssl-throwing-ssl-certificate-problem-unable-to-get-local-issuer-certificate/26209">Trusted SSL throwing SSL certificate problem: unable to get local issuer certificate</a></p>
+<h2 id="使用-git-lfs">使用 Git-lfs</h2>
+<p>具体流程见下面的命令示例：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 在当前项目中启用 lfs</span>
+git lfs install
+<span class="c1"># 用 git-lfs 追踪指定目录下所有文件，注意这里是两个星号</span>
+git lfs track <span class="s2">&#34;answers/**&#34;</span>
+<span class="c1"># 在 git 中添加 .gitattributes 文件，这样其它用户克隆项目时，才能将 git-lfs 管理的文件也拷贝下来</span>
+git add .gitattributes
+<span class="c1"># 然后在 git 中添加资源文件即可</span>
+git add .
+</code></pre></div><p>参考链接：</p>
+<ul>
+<li>GitLab 上关于 Git-LFS 的文档：<a href="https://docs.gitlab.com/ee/topics/git/lfs/index.html">GitLab Docs &gt; Topics &gt; Git &gt; Git Large File Storage (LFS)</a></li>
+<li>指定 Git-LFS 追踪某个文件夹下所有文件的正确命令：<a href="https://stackoverflow.com/a/44428097/2667665">Git LFS refused to track my large files properly, until I did the following</a></li>
+</ul>
+<h2 id="更新-gitlab-镜像">更新 GitLab 镜像</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 设置 GitLab 环境变量</span>
+<span class="nb">export</span> <span class="nv">GITLAB_HOME</span><span class="o">=</span>/srv/gitlab
+<span class="c1"># 进入 docker-compose.yml 文件所在目录</span>
+<span class="nb">cd</span> /etc/gitlab
+<span class="c1"># 更新镜像</span>
+docker-compose pull
+<span class="c1"># 重新启动 GitLab 容器</span>
+docker-compose up -d
+<span class="c1"># 查看启动进度</span>
+docker logs -f gitlab
+</code></pre></div></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://www.hewei.in/tags/gitlab/">Gitlab</a>
+                                    
+                                    <a href="https://www.hewei.in/tags/docker/">Docker</a>
+                                    
+                                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://www.hewei.in/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: '6kGh7JpRLb89n7mDsx4LmntN-gzGzoHsz',
+        appKey: 'kWKa5LtKrMR1sMPfRl5Wzx4r',
+        placeholder: '',
+        visitor: 'true',
+    })
+</script>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://www.hewei.in/js/jquery-3.5.1.min.js"></script>
+<link href="https://www.hewei.in/css/fancybox.min.css" rel="stylesheet">
+<script src="https://www.hewei.in/js/fancybox.min.js"></script>
+<script src="https://www.hewei.in/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>

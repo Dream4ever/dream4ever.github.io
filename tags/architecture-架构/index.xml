@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Architecture 架构 on 岁月留痕</title>
+    <link>https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/</link>
+    <description>Recent content in Architecture 架构 on 岁月留痕</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 30 Sep 2020 10:08:00 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《从0开始学架构》学习笔记</title>
+      <link>https://www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</link>
+      <pubDate>Wed, 30 Sep 2020 10:08:00 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-09-learn-architecture-from-the-beginning/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;课程链接：&lt;a href=&#34;https://time.geekbang.org/column/intro/81&#34;&gt;https://time.geekbang.org/column/intro/81&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;第二遍阅读时，选出每篇文章的优质留言&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;01--架构到底是指什么&#34;&gt;01 | 架构到底是指什么？&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;课程链接：&lt;a href=&#34;https://time.geekbang.org/column/article/6458&#34;&gt;https://time.geekbang.org/column/article/6458&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;系统与子系统&#34;&gt;系统与子系统&lt;/h3&gt;
+&lt;p&gt;系统：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由一群&lt;strong&gt;有关联的个体&lt;/strong&gt;（如汽车的发动机、底盘、轮胎等各部分），&lt;/li&gt;
+&lt;li&gt;根据&lt;strong&gt;某种规则运作&lt;/strong&gt;（如发动机产生动力，变速器和传动轴传输动力），&lt;/li&gt;
+&lt;li&gt;能完成个别元件不能单独完成的工作的&lt;strong&gt;群体&lt;/strong&gt;（系统不是个体能力的简单加和，而是产生新的能力，比如汽车各部分组合起来之后，才能载重前进）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;子系统和系统的定义其实一样，只是观察的角度不同，一个系统可能是另一个更大系统的子系统。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;比如微信本身是一个大系统，包含聊天、登录、支付、朋友圈等子系统。&lt;/li&gt;
+&lt;li&gt;朋友圈这个系统又进一步包含动态、评论、点赞等子系统。&lt;/li&gt;
+&lt;li&gt;评论这个系统又进一步包含防刷子系统、审核子系统、发布子系统、存储子系统。&lt;/li&gt;
+&lt;li&gt;评论审核子系统不再包含&lt;strong&gt;业务意义上&lt;/strong&gt;的子系统，而是包括各个模块或组件，这些模块或组件可能也是另一个维度上的系统。比如 MySQL、Redis 是存储系统，但不是业务子系统。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

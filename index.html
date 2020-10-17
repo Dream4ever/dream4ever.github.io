@@ -112,6 +112,17 @@
                     <span class="date">2020.10.17</span>
                 </span>
                 
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/hugo/">Hugo</a>
+                    
+                    <a href="https://www.hewei.in/tags/blog-%E5%8D%9A%E5%AE%A2/">Blog 博客</a>
+                    
+                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                    
+                </span>
+                
             </div>
         </div>
     </div>
@@ -153,6 +164,15 @@ $ yarn config get registry
                     <span class="date">2020.10.08</span>
                 </span>
                 
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/node.js/">Node.js</a>
+                    
+                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                    
+                </span>
+                
             </div>
         </div>
     </div>
@@ -190,6 +210,17 @@ $ pm2 startup
                 <span class="field">
                     <i class="ri-map-pin-time-line"></i>
                     <span class="date">2020.10.08</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/node.js/">Node.js</a>
+                    
+                    <a href="https://www.hewei.in/tags/pm2/">PM2</a>
+                    
+                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                    
                 </span>
                 
             </div>
@@ -236,6 +267,214 @@ $ pm2 startup
                 <span class="field">
                     <i class="ri-map-pin-time-line"></i>
                     <span class="date">2020.09.30</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/">Architecture 架构</a>
+                    
+                    <a href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Note 学习笔记</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
+        <h2><a href='/posts/2020-07-config-gitlab-in-docker/'>Docker 中部署 GitLab</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p><h2 id="下载-gitlab-镜像">下载 GitLab 镜像</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker pull gitlab/gitlab-ce
+</code></pre></div><p>镜像链接：<a href="https://hub.docker.com/r/gitlab/gitlab-ce/">https://hub.docker.com/r/gitlab/gitlab-ce/</a></p>
+<h2 id="安装-docker-compose">安装 Docker Compose</h2>
+<p>官方教程：<a href="https://docs.docker.com/compose/install/">Install Docker Compose</a></p>
+<h2 id="创建-docker-compose-配置文件">创建 docker-compose 配置文件</h2>
+<p>在主机的 <code>/etc/gitlab</code> 目录下创建 GitLab 容器的配置文件 <code>docker-compose.yml</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">web:
+  image: <span class="s1">&#39;gitlab/gitlab-ce:latest&#39;</span>
+  container_name: gitlab
+  restart: always
+  hostname: <span class="s1">&#39;code.upp.com&#39;</span>
+  environment:
+    GITLAB_OMNIBUS_CONFIG: <span class="p">|</span>
+      external_url <span class="s1">&#39;http://code.upp.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;username@mail.domain.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtpdm.aliyun.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">80</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;username@mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtp_password&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;login&#34;</span>
+  ports:
+    - <span class="s1">&#39;80:80&#39;</span>
+    - <span class="s1">&#39;443:443&#39;</span>
+  volumes:
+    - <span class="s1">&#39;$GITLAB_HOME/config:/etc/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/logs:/var/log/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/data:/var/opt/gitlab&#39;</span>
+</code></pre></div><p>同时修改电脑上的 DNS，设置 <code>code.upp.com</code> 为运行 GitLab 服务器所对应的 IP。</p>......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2020.07.20</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/gitlab/">Gitlab</a>
+                    
+                    <a href="https://www.hewei.in/tags/docker/">Docker</a>
+                    
+                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
+        <h2><a href='/posts/2020-02-new-server-configuration-v5.0/'>云服务器配置笔记 v5.0</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p><p>2020年这个特殊的寒假，闲来无事，将阿里云服务器进行了重新配置，从系统安装，到SSH连接，再到网站环境的部署，都按最新的方式和软件版本进行操作，并进行了关键环节的记录，以供参考。</p>
+<h2 id="系统安装">系统安装</h2>
+<p>在控制台将阿里云服务器 ECS 实例停止，以便更换操作系统。</p>
+<p>找到并点击“更换操作系统”菜单，选择“公共镜像”中“CentOS 7.X”的最新版。</p>
+<p>“安全设置”中选择“设置密钥”，选上之前为该服务器生成并使用的密钥对。</p>
+<ul>
+<li>配置密钥对登录之后，阿里云会自动禁止密码登录，这样安全性更高</li>
+<li>猜测应当是在 <code>/etc/ssh/sshd_config</code> 文件中添加 <code>PasswordAuthentication no</code> 这么一行禁止密码登录的</li>
+<li>如果没有现成的密钥对，就先去新建密钥对，并将密钥绑定到该 ECS 实例，再进行后续操作</li>
+</ul>
+<p>在弹出的“MFA验证”对话框中，输入手机 APP “Authenticator” 中该 ECS 实例所属阿里云账号的验证码。点击右下角的按钮，稍候片刻，ECS 实例就装上最新版的 CentOS 了。</p>
+<h2 id="ssh-密钥对连接-ecs-实例">SSH 密钥对连接 ECS 实例</h2>
+<h3 id="本机首次连接">本机首次连接</h3>
+<p>如果本机之前未通过 SSH 密钥对连接过 ECS 实例，则按照教程 <a href="https://help.aliyun.com/document_detail/51798.html">使用SSH密钥对连接Linux实例</a> 进行配置即可。</p>
+<p>其中如果用的是 <a href="https://help.aliyun.com/document_detail/51798.html#title-7je-5ba-sm2">在支持SSH命令的环境中使用密钥对</a> 这种方式，即使按照 <a href="https://help.aliyun.com/document_detail/51798.html#title-ii4-zmw-zxi">通过config文件配置</a> 的流程来操作，也要把前一小节 <a href="https://help.aliyun.com/document_detail/51798.html#title-7je-5ba-sm2">通过命令配置</a> 的流程做一遍，这样才能够确保私钥文件的权限符合密钥登录的要求，否则将无法登录。</p>
+<h3 id="本机非全新连接">本机非全新连接</h3>
+<p>如果本机之前用密钥连接过 ECS 实例，那么本机的 <code>~/.ssh/known_hosts</code> 文件中保存的是旧的 host key。重装 ECS 实例的系统后，需要将本机该文件中旧的 host key 删除，才能够用密钥成功登录 ECS 实例。</p>
+<h3 id="修改-root-用户的密码">修改 root 用户的密码</h3>
+<p>因为不知道 root 用户的默认密码是什么，所以在首次通过 SSH 密钥对连接到 ECS 实例之后，就把 root 用户的密码改了，免得之后还需要密码。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ passwd root <span class="c1"># 不需要输入旧密码，直接输入两遍新密码即可</span>
+</code></pre></div>......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2020.02.08</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/server-%E6%9C%8D%E5%8A%A1%E5%99%A8/">Server 服务器</a>
+                    
+                    <a href="https://www.hewei.in/tags/ops-%E8%BF%90%E7%BB%B4/">Ops 运维</a>
+                    
+                    <a href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Note 学习笔记</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
+        <h2><a href='/posts/2020-02-frontend-masters-api-design-in-nodejs-v3/'>API Design in Node.js, v3 课程学习笔记</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p><p>之前在研究该如何更好地设计 Node.js API 时，在网上找到了 Frontend Masters 的《API Design in Node.js, v3》这门课，当时大致看了一下 GitHub 上对应的代码，觉得这门课程设计得挺不错，于是买了一个月的 Frontend Masters 会员，把这门课程认真学了一遍，并且把关键部分都做了笔记，具体内容见文章正文。</p>
+<h2 id="课程地址">课程地址</h2>
+<p><a href="https://frontendmasters.com/courses/api-design-nodejs-v3/">API Design in Node.js, v3</a></p>
+<h2 id="环境配置">环境配置</h2>
+<h3 id="在-macos-上安装-mongodb">在 macOS 上安装 MongoDB</h3>
+<p>参考 <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/">Install MongoDB Community Edition on macOS</a>。</p>
+<p>简而言之，就是通过 Homebrew 安装 MongoDB，并按照官方建议，用 brew 将 MongoDB 以服务的方式运行在后台。</p>
+<h2 id="注意事项">注意事项</h2>
+<h3 id="yarn-及-npm">Yarn 及 NPM</h3>
+<p>因为课程已经是一年多以前的了，项目中的依赖库版本也没怎么更新，所以如果遇到用 Yarn 或 NPM 安装依赖库会失败的情况，比如 <code>bcrypt</code> 这个库，那么可以先删除对应的库，然后重新安装，这样会安装最新版，通常都能成功。</p>......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2020.02.04</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/node.js/">Node.js</a>
+                    
+                    <a href="https://www.hewei.in/tags/system-design-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">System Design 系统设计</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
+        <h2><a href='/posts/2017-11-learn-programming-language-from-the-beginning/'>如何从零开始学习一门编程语言</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p><p>新生大学的张越老师，系统介绍了如何从零学习一门新的编程语言，全是干货，不仅是学习编程语言，其它各种知识其实也都适用，建议认真学习贯彻。</p>
+<h2 id="这节课的作用">这节课的作用</h2>
+<p>作为程序员，遇到一门新的编程语言，必须用很快的速度去掌握它、使用它。</p>
+<p>所以非常重要的一项能力就是迅速的自学能力！</p>
+<p>此外，对于想要入门的外行来说，这件事情其实是有方法的。</p>
+<p>近几年没有写代码，但是这一阵也有在学流行的编程语言。实际上，学习一门编程语言不应当是在讲 PPT。那么怎样才是一种好的教学方式？</p>
+<p>今天的这节课，就会向大家介绍一下，在学习编程语言的时候，应该做哪些事情。</p>......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2017.11.14</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/methodology-%E6%96%B9%E6%B3%95%E8%AE%BA/">Methodology 方法论</a>
+                    
                 </span>
                 
             </div>

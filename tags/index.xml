@@ -5,6 +5,124 @@
     <link>https://www.hewei.in/tags/</link>
     <description>Recent content in Tags on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://www.hewei.in/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sat, 17 Oct 2020 11:31:39 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog 博客</title>
+      <link>https://www.hewei.in/tags/blog-%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 17 Oct 2020 11:31:39 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/blog-%E5%8D%9A%E5%AE%A2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hugo</title>
+      <link>https://www.hewei.in/tags/hugo/</link>
+      <pubDate>Sat, 17 Oct 2020 11:31:39 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial 教程</title>
+      <link>https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/</link>
+      <pubDate>Sat, 17 Oct 2020 11:31:39 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node.js</title>
+      <link>https://www.hewei.in/tags/node.js/</link>
+      <pubDate>Thu, 08 Oct 2020 04:56:33 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/node.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PM2</title>
+      <link>https://www.hewei.in/tags/pm2/</link>
+      <pubDate>Thu, 08 Oct 2020 04:31:20 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/pm2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Architecture 架构</title>
+      <link>https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Wed, 30 Sep 2020 10:08:00 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Note 学习笔记</title>
+      <link>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 30 Sep 2020 10:08:00 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://www.hewei.in/tags/docker/</link>
+      <pubDate>Mon, 20 Jul 2020 10:10:59 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gitlab</title>
+      <link>https://www.hewei.in/tags/gitlab/</link>
+      <pubDate>Mon, 20 Jul 2020 10:10:59 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/gitlab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ops 运维</title>
+      <link>https://www.hewei.in/tags/ops-%E8%BF%90%E7%BB%B4/</link>
+      <pubDate>Sat, 08 Feb 2020 09:31:35 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/ops-%E8%BF%90%E7%BB%B4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Server 服务器</title>
+      <link>https://www.hewei.in/tags/server-%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Sat, 08 Feb 2020 09:31:35 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/server-%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>System Design 系统设计</title>
+      <link>https://www.hewei.in/tags/system-design-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Tue, 04 Feb 2020 08:27:48 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/system-design-%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Methodology 方法论</title>
+      <link>https://www.hewei.in/tags/methodology-%E6%96%B9%E6%B3%95%E8%AE%BA/</link>
+      <pubDate>Tue, 14 Nov 2017 17:39:32 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/tags/methodology-%E6%96%B9%E6%B3%95%E8%AE%BA/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

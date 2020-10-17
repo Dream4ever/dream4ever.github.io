@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gitlab on 岁月留痕</title>
+    <link>https://www.hewei.in/tags/gitlab/</link>
+    <description>Recent content in Gitlab on 岁月留痕</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Jul 2020 10:10:59 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker 中部署 GitLab</title>
+      <link>https://www.hewei.in/posts/2020-07-config-gitlab-in-docker/</link>
+      <pubDate>Mon, 20 Jul 2020 10:10:59 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-07-config-gitlab-in-docker/</guid>
+      <description>&lt;h2 id=&#34;下载-gitlab-镜像&#34;&gt;下载 GitLab 镜像&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;docker pull gitlab/gitlab-ce
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;镜像链接：&lt;a href=&#34;https://hub.docker.com/r/gitlab/gitlab-ce/&#34;&gt;https://hub.docker.com/r/gitlab/gitlab-ce/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;安装-docker-compose&#34;&gt;安装 Docker Compose&lt;/h2&gt;
+&lt;p&gt;官方教程：&lt;a href=&#34;https://docs.docker.com/compose/install/&#34;&gt;Install Docker Compose&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;创建-docker-compose-配置文件&#34;&gt;创建 docker-compose 配置文件&lt;/h2&gt;
+&lt;p&gt;在主机的 &lt;code&gt;/etc/gitlab&lt;/code&gt; 目录下创建 GitLab 容器的配置文件 &lt;code&gt;docker-compose.yml&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;web:
+  image: &lt;span class=&#34;s1&#34;&gt;&amp;#39;gitlab/gitlab-ce:latest&amp;#39;&lt;/span&gt;
+  container_name: gitlab
+  restart: always
+  hostname: &lt;span class=&#34;s1&#34;&gt;&amp;#39;code.upp.com&amp;#39;&lt;/span&gt;
+  environment:
+    GITLAB_OMNIBUS_CONFIG: &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+      external_url &lt;span class=&#34;s1&#34;&gt;&amp;#39;http://code.upp.com&amp;#39;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;gitlab_email_from&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;username@mail.domain.com&amp;#39;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_enable&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_address&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;smtpdm.aliyun.com&amp;#34;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_port&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_user_name&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;username@mail.domain.com&amp;#34;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_password&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;smtp_password&amp;#34;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_domain&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;mail.domain.com&amp;#34;&lt;/span&gt;
+      gitlab_rails&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;smtp_authentication&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;login&amp;#34;&lt;/span&gt;
+  ports:
+    - &lt;span class=&#34;s1&#34;&gt;&amp;#39;80:80&amp;#39;&lt;/span&gt;
+    - &lt;span class=&#34;s1&#34;&gt;&amp;#39;443:443&amp;#39;&lt;/span&gt;
+  volumes:
+    - &lt;span class=&#34;s1&#34;&gt;&amp;#39;$GITLAB_HOME/config:/etc/gitlab&amp;#39;&lt;/span&gt;
+    - &lt;span class=&#34;s1&#34;&gt;&amp;#39;$GITLAB_HOME/logs:/var/log/gitlab&amp;#39;&lt;/span&gt;
+    - &lt;span class=&#34;s1&#34;&gt;&amp;#39;$GITLAB_HOME/data:/var/opt/gitlab&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时修改电脑上的 DNS，设置 &lt;code&gt;code.upp.com&lt;/code&gt; 为运行 GitLab 服务器所对应的 IP。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
