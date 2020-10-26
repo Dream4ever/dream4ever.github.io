@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.hewei.in/tags/javascript/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/posts/2020-10-mdn-javascript-docs-learning-note/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/posts/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/tags/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/</loc>
+    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.hewei.in/tags/blog-%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2020-10-17T11:31:39+08:00</lastmod>
   </url>
@@ -18,22 +48,7 @@
   </url>
   
   <url>
-    <loc>https://www.hewei.in/posts/</loc>
-    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/</loc>
-    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2020-10-17T11:31:39+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/</loc>
     <lastmod>2020-10-17T11:31:39+08:00</lastmod>
   </url>
   
@@ -59,11 +74,6 @@
   
   <url>
     <loc>https://www.hewei.in/tags/architecture-%E6%9E%B6%E6%9E%84/</loc>
-    <lastmod>2020-09-30T10:08:00+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2020-09-30T10:08:00+08:00</lastmod>
   </url>
   

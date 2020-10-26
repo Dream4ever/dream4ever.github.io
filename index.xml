@@ -6,7 +6,18 @@
     <description>Recent content on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Oct 2020 11:31:39 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 26 Oct 2020 19:41:57 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MDN JavaScript 教程 - 学习笔记</title>
+      <link>https://www.hewei.in/posts/2020-10-mdn-javascript-docs-learning-note/</link>
+      <pubDate>Mon, 26 Oct 2020 19:41:57 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-10-mdn-javascript-docs-learning-note/</guid>
+      <description>&lt;p&gt;最近工作不太忙了，于是打算从头开始，系统地把 JavaScript 学习一遍。&lt;/p&gt;
+&lt;p&gt;这篇笔记所记录的是 MDN 上的 JavaScript 教程的学习记录和心得。&lt;/p&gt;
+&lt;p&gt;教程首页：&lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript&#34;&gt;JavaScript | MDN&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Hugo 博客配置教程</title>
       <link>https://www.hewei.in/posts/2020-10-hugo-blog-tutorial/</link>
