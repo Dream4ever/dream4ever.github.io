@@ -106,9 +106,9 @@
 <h3 id="what-is-javascript">What is JavaScript?</h3>
 <p><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/What_is_JavaScript">点我查看页面</a></p>
 <h4 id="浏览器安全">浏览器安全</h4>
-<p>每个浏览器标签页都有自己专属的执行环境（execution environment），大部分情况下，各标签页的代码是无法影响其他标签页的。</p>
+<p>每个浏览器标签页都有自己专属的执行环境 (execution environment)，大部分情况下，各标签页的代码是无法影响其他标签页的。</p>
 <h4 id="脚本加载策略">脚本加载策略</h4>
-<p>浏览器的 <code>DOMContentLoaded</code> 事件，可以保证在 HTML body 加载并解析（load and parse）完成后，才执行事件中绑定的代码。</p>
+<p>浏览器的 <code>DOMContentLoaded</code> 事件，可以保证在 HTML body 加载并解析 (load and parse) 完成后，才执行事件中绑定的代码。</p>
 <p><code>async</code> 和 <code>defer</code> 属性都可以实现脚本的非阻塞式加载，如果不用这两个属性，HTML 页面在遇到脚本的时候，就必须等待脚本加载完毕，才执行它后面的代码。</p>
 <p>不过 <code>async</code> 属性不保证多个脚本会按照其在页面中出现的顺序执行。</p>
 <p>而 <code>defer</code> 则可以保证脚本的按顺序执行，并且在 HTML body 加载并解析完成后执行，效果和 <code>DOMContentLoaded</code> 相同。</p>
@@ -137,15 +137,22 @@
 <p><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Variables">点我查看页面</a></p>
 <p>核心内容：变量的基础知识。</p>
 <p>变量是<strong>值的容器</strong>，容器里的东西是可以改变的，变量的值也是可以改变的。</p>
-<p>一个变量要先声明（declare）然后才能初始化/赋值（initialize）。</p>
-<p>用 <code>var</code> 声明的变量，会有作用域提升（hoisting）的问题，<code>let</code> 和 <code>const</code> 则没有这个问题。</p>
+<p>一个变量要先声明 (declare) 然后才能初始化/赋值 (initialize)。</p>
+<p>用 <code>var</code> 声明的变量，会有作用域提升 (hoisting) 的问题，<code>let</code> 和 <code>const</code> 则没有这个问题。</p>
 <p><code>var</code> 可以多次声明一个变量，<code>let</code> 和 <code>const</code> 则只能声明一次，否则会报错。</p>
 <p>给变量取名的一些规范：</p>
 <ul>
 <li>变量名只包含英文字母、阿拉伯数字和下划线，并且不能用数字开头，且建议不要用下划线开头，这样的变量通常被系统占用。</li>
 <li>变量名建议用 <code>lower camel case</code> 格式命名，也就是变量名中首个单词全部小写，之后的单词全部首字母大写，其余字母全小写。</li>
 <li>变量名的英文字母区分大小写。</li>
-</ul></div>
+</ul>
+<h3 id="basic-math-in-javascript--numbers-and-operators">Basic math in JavaScript — numbers and operators</h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math">点我查看页面</a></p>
+<p>核心内容：数学的基础知识。</p>
+<p>JavaScript 中数的类型：Number 和 BigInt。</p>
+<p>JavaScript 中十进制数 (decimal number) 的种类：整数，浮点数，双精度浮点数。</p>
+<p>JavaScript 中各种进制的数：二进制 (binary)，八进制 (octal)，十进制 (decimal)，十六进制 (hexadecimal)。</p>
+<p>将字符串转换为数字的方法：<code>Number()</code> 构造函数。</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
