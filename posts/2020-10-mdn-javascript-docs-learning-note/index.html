@@ -111,7 +111,21 @@
 <p>浏览器的 <code>DOMContentLoaded</code> 事件，可以保证在 HTML body 加载并解析（load and parse）完成后，才执行事件中绑定的代码。</p>
 <p><code>async</code> 和 <code>defer</code> 属性都可以实现脚本的非阻塞式加载，如果不用这两个属性，HTML 页面在遇到脚本的时候，就必须等待脚本加载完毕，才执行它后面的代码。</p>
 <p>不过 <code>async</code> 属性不保证多个脚本会按照其在页面中出现的顺序执行。</p>
-<p>而 <code>defer</code> 则可以保证脚本的按顺序执行，并且在 HTML body 加载并解析完成后执行，效果和 <code>DOMContentLoaded</code> 相同。</p></div>
+<p>而 <code>defer</code> 则可以保证脚本的按顺序执行，并且在 HTML body 加载并解析完成后执行，效果和 <code>DOMContentLoaded</code> 相同。</p>
+<h3 id="a-first-splash-into-javascript">A first splash into JavaScript</h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/A_first_splash">点我查看页面</a></p>
+<p>核心内容：如何将一个需求分解成具体的编程任务。</p>
+<p>教程中介绍的“猜大小”游戏，规则如下：</p>
+<ol>
+<li>用户有 10 次机会，猜一个 1~100 之间的数字。</li>
+<li>如果猜中，或者用完了 10 次机会都没猜中，则游戏结束，用户可选择重新开始。</li>
+<li>如果没猜中，且 10 次机会没有用完，游戏会提示用户猜的数字偏大还是偏小。</li>
+</ol>
+<p>在自己尝试着编写这个游戏的时候，一开始想直接写代码，后来发现自己并没有把流程想清楚，于是试着整理思路理清流程。</p>
+<p>在整理思路时，发现自己即使看了源代码，也看了教程中给出的流程，真到自己做的时候，依然会有各种考虑不周全的情况。这也很正常，知易行难，没必要要求自己第一次就能做到尽善尽美，也不现实。</p>
+<p>之后花了两个小时的时间把这个小游戏写出来了，虽然已经做了好几年 Web 开发了，但是能够实现这个小游戏还是蛮有成就感的。</p>
+<p>这种先写出思路，然后再写出具体代码的习惯，应当一直坚持，想清楚了再去做，能够将效率提升很多。</p>
+<p>PS：在阅读 MDN 上的源码时，看到了一个新的 API <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">Node.textContent</a>。</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
