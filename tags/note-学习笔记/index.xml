@@ -6,7 +6,16 @@
     <description>Recent content in Note 学习笔记 on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Oct 2020 19:41:57 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Nov 2020 22:06:23 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>云服务器配置笔记 v6.0</title>
+      <link>https://www.hewei.in/posts/2020-11-new-server-configuration-v6.0/</link>
+      <pubDate>Wed, 18 Nov 2020 22:06:23 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-11-new-server-configuration-v6.0/</guid>
+      <description>&lt;p&gt;为了之后将业务从 Windows 迁移到 Linux，现在就买了一台阿里云服务器，安装了 Linux 系统，然后开始配置各方面的功能，以便之后迅速迁移。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>MDN JavaScript 教程 - 学习笔记</title>
       <link>https://www.hewei.in/posts/2020-10-mdn-javascript-docs-learning-note/</link>

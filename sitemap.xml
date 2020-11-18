@@ -3,32 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/tags/ops-%E8%BF%90%E7%BB%B4/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/posts/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/tags/server-%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/tags/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/posts/2020-11-new-server-configuration-v6.0/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.hewei.in/</loc>
+    <lastmod>2020-11-18T22:06:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.hewei.in/tags/javascript/</loc>
     <lastmod>2020-10-26T19:41:57+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.hewei.in/posts/2020-10-mdn-javascript-docs-learning-note/</loc>
-    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/posts/</loc>
-    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/</loc>
-    <lastmod>2020-10-26T19:41:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/</loc>
     <lastmod>2020-10-26T19:41:57+08:00</lastmod>
   </url>
   
@@ -95,16 +110,6 @@
   <url>
     <loc>https://www.hewei.in/tags/gitlab/</loc>
     <lastmod>2020-07-20T10:10:59+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/ops-%E8%BF%90%E7%BB%B4/</loc>
-    <lastmod>2020-02-08T09:31:35+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.hewei.in/tags/server-%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
-    <lastmod>2020-02-08T09:31:35+08:00</lastmod>
   </url>
   
   <url>
