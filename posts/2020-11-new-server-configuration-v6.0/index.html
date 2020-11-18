@@ -97,30 +97,12 @@
                         <span class="date">2020.11.18</span>
                     </div>
                     <div class="post_content markdown"><p>为了之后将业务从 Windows 迁移到 Linux，现在就买了一台阿里云服务器，安装了 Linux 系统，然后开始配置各方面的功能，以便之后迅速迁移。</p>
-<h2 id="系统安装及配置">系统安装及配置</h2>
-<h3 id="系统安装">系统安装</h3>
-<p>选择安装 <strong>Alibaba Cloud Linux等保2.0三级版</strong> ，这样自己不用花心思去折腾很多配置，不是最重要的地方，省心最关键。</p>
-<p>安装时创建密钥对，这样必须通过密钥对才能远程登录系统，提高安全性。</p>
-<h3 id="执行加固脚本">执行加固脚本</h3>
-<p>安装完成后进入系统，按照提示执行 <code>/root/cybersecurity.sh</code> 进行安全加固：</p>
-<ul>
-<li>创建普通用户 <code>www</code>，并设置密码</li>
-<li>创建审计员用户 <code>audit</code>，并设置密码</li>
-<li>创建安全员用户 <code>secure</code>，并设置密码</li>
-</ul>
-<p>创建完成后重新 SSH 连接服务器，发现不能用密钥对登录 <code>www</code> 用户了，只能用账号密码的方式登录。</p>
-<p>TODO: 恢复密钥对登录，禁止所有用户的账号密码登录。</p>
-<p>参考资料：</p>
-<ul>
-<li><a href="https://help.aliyun.com/document_detail/186245.html">Alibaba Cloud Linux等保2.0三级版镜像使用说明</a></li>
-</ul>
-<h3 id="执行安全更新">执行安全更新</h3>
-<p>在终端执行 <code>yum updateinfo list</code> ，查看当前可用的 CVE 安全更新。</p>
-<p>如果有可用的 CVE 安全更新，可以再执行 <code>yum upgrade --security</code>，来安装这些 CVE 安全更新。</p>
-<p>参考资料：</p>
-<ul>
-<li><a href="https://help.aliyun.com/document_detail/161297.html?spm=a2c4g.11186623.6.768.3507307fohhEJO">基于YUM的安全更新操作</a></li>
-</ul></div>
+<h2 id="系统安装">系统安装</h2>
+<h3 id="安装系统">安装系统</h3>
+<p>选择安装 CentOS 7 的最新版，安装时创建密钥对，这样必须通过密钥对才能远程登录系统，提高安全性。</p>
+<h3 id="格式化数据盘">格式化数据盘</h3>
+<p>随系统盘一起购买的数据盘，虽然已经被挂载到 ECS 实例上了，但还需要创建分区、创建文件系统、挂载文件系统，以及在开机后自动挂载这个新分区，才能让数据盘正常使用。</p>
+<p>具体操作流程参考 <a href="https://help.aliyun.com/document_detail/25426.html">Linux格式化数据盘</a> 一文中的操作即可，文章讲解得十分详细，完全照做就行，其中文件系统选择 <code>ext4</code> 即可，系统分区使用的也是这个文件系统。</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
