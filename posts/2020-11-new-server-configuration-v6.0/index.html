@@ -97,24 +97,71 @@
                         <span class="date">2020.11.18</span>
                     </div>
                     <div class="post_content markdown"><p>为了之后将业务从 Windows 迁移到 Linux，现在就买了一台阿里云服务器，安装了 Linux 系统，然后开始配置各方面的功能，以便之后迅速迁移。</p>
-<h2 id="通用操作规范">通用操作规范</h2>
+<h2 id="零通用操作规范">零、通用操作规范</h2>
 <ol>
 <li>备份文件时，统一用 <code>cp file_name file_name_bak</code> 这样的命令，为文件添加后缀 <code>_bak</code></li>
 </ol>
-<h2 id="系统安装">系统安装</h2>
-<h3 id="安装系统">安装系统</h3>
-<p>选择安装 CentOS 7 的最新版，安装时创建密钥对，这样必须通过密钥对才能远程登录系统，提高安全性。</p>
-<h3 id="格式化数据盘">格式化数据盘</h3>
+<h2 id="一系统安装">一、系统安装</h2>
+<h3 id="11-安装系统">1.1 安装系统</h3>
+<p>选择安装 CentOS 7 的最新版，安装时创建密钥对，并且后面进行设置，要求只能用密钥对远程登录系统，提高安全性。</p>
+<h3 id="12-格式化数据盘">1.2 格式化数据盘</h3>
 <p>随系统盘一起购买的数据盘，虽然已经被挂载到 ECS 实例上了，但还需要创建分区、创建文件系统、挂载文件系统，以及在开机后自动挂载这个新分区，才能让数据盘正常使用。</p>
 <p>具体操作流程参考 <a href="https://help.aliyun.com/document_detail/25426.html">Linux格式化数据盘</a> 中的操作即可，文章讲解得十分详细，完全照做就行，其中文件系统选择 <code>ext4</code> ，系统分区使用的也是这个文件系统。</p>
-<h2 id="系统监控">系统监控</h2>
-<h3 id="安装云监控插件">安装云监控插件</h3>
+<h2 id="二系统监控">二、系统监控</h2>
+<h3 id="21-安装云监控插件">2.1 安装云监控插件</h3>
 <p>参考 <a href="https://help.aliyun.com/document_detail/183482.html">安装和卸载插件</a>，在 CentOS 7 上安装云监控查看，并在 <a href="https://cloudmonitor.console.aliyun.com/">网页端</a> 查看云监控插件是否正常运行。</p>
-<h3 id="启用-cpu-监控">启用 CPU 监控</h3>
+<h3 id="22-启用-cpu-监控">2.2 启用 CPU 监控</h3>
 <p>参考 ECS 最佳实践中的 <a href="https://help.aliyun.com/document_detail/52047.html#title-ri6-gxw-2an">设置报警阈值和报警规则</a>，为云服务器添加 CPU 告警规则，连续 3 个 5 分钟 CPU 使用率都大于等于 70% 的话，就发短信报警。</p>
-<h2 id="系统加固">系统加固</h2>
-<h3 id="ssh-加固">SSH 加固</h3>
-<h4 id="修改-ssh-默认端口">修改 SSH 默认端口</h4>
+<h2 id="三系统加固">三、系统加固</h2>
+<h3 id="31-用户加固">3.1 用户加固</h3>
+<h4 id="311-提升密码安全性">3.1.1 提升密码安全性</h4>
+<p>参考 <a href="https://wiki.centos.org/HowTos/OS_Protection#Password_Policies">Password Policies</a> 和 <a href="https://www.techrepublic.com/article/enable-password-aging-on-linux-systems/">Enable password aging on Linux systems</a> 中的方法，为当前已存在的用户（root）和之后新创建的用户，设置修改密码的最小时间间隔（7 天），和密码失效时间（180 天）。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份密码配置文件</span>
+$ cp /etc/login.defs /etc/login.defs_bak
+
+<span class="c1"># 修改密码配置文件</span>
+$ vi /etc/login.defs
+
+<span class="c1"># 将修改密码的最大时间间隔 PASS_MAX_DAYS 的值改为 180</span>
+<span class="c1"># 将修改密码的最小时间间隔 PASS_MIN_DAYS 的值改为 7</span>
+<span class="c1"># 将最小密码长度 PASS_MIN_LEN 的值改为 16</span>
+<span class="c1"># 将密码到期前开始提醒的时间 PASS_WARN_AGE 的值设置为 14</span>
+<span class="c1"># 然后保存并关闭文件</span>
+
+<span class="c1"># 上面的配置只对之后新建的用户生效</span>
+<span class="c1"># 这里还要为已存在的 root 用户启用同样的设置</span>
+$ chage --maxdays <span class="m">180</span> root
+$ chage --mindays <span class="m">7</span> root
+$ chage --warndays <span class="m">14</span> root
+</code></pre></div><p><a href="https://www.techrepublic.com/article/enable-password-aging-on-linux-systems/">Enable password aging on Linux systems</a> 还提到了可以设置用户的 <code>inactive</code> 和 <code>expire</code> 时间，这里先不设置。</p>
+<p>然后根据阿里云的加固建议，编辑 <code>/etc/security/pwquality.conf</code>，把 <code>minlen</code> （密码最小长度）设置为 16，把 <code>minclass</code> （至少包含小写字母、大写字母、数字、特殊字符等4类字符中等3类或4类）设置为 4。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份密码质量文件</span>
+$ cp /etc/security/pwquality.conf /etc/security/pwquality.conf_bak
+
+<span class="c1"># 修改密码质量文件</span>
+$ vi /etc/security/pwquality.conf
+
+<span class="c1"># 将 minlen 的值改为 16</span>
+<span class="c1"># 将 minclass 的值改为 4</span>
+<span class="c1"># 然后保存并退出</span>
+</code></pre></div><p>再根据阿里云的加固建议，强制用户最近用过的 24 个密码不能有重复的，降低密码猜测攻击风险：</p>
+<p>修改 <code>/etc/pam.d/password-auth</code> 和 <code>/etc/pam.d/system-auth</code> 这两个文件，在 <code>password sufficient pam_unix.so</code> 这行的末尾配置 <code>remember</code> 参数为 24。原来的内容不用更改，只在行尾添加 <code> remember=24</code> 即可。</p>
+<h4 id="312-建立新用户并赋予-root-权限">3.1.2 建立新用户并赋予 root 权限</h4>
+<p>参考 <a href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-centos-7">Initial Server Setup with CentOS 7</a> 中的建议，建立新用户并赋予 root 权限，以后只用该用户通过 SSH 登录至服务器。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 先用 root 用户 SSH 登录至服务器</span>
+
+<span class="c1"># 建立新用户</span>
+$ adduser www
+<span class="c1"># 为新用户设置高强度密码</span>
+$ passwd www
+<span class="c1"># 将用户 www 加入 wheel 用户组，可执行 sudo 命令</span>
+$ gpasswd -a demo wheel
+<span class="c1"># 切换至用户 www</span>
+$ su www
+<span class="c1"># 测试用户 www 是否能执行 sudo 命令，首次执行需要输入用户 www 的密码</span>
+$ sudo ls -la /root
+</code></pre></div><h3 id="32-ssh-加固">3.2 SSH 加固</h3>
+<h4 id="321-修改-ssh-默认端口">3.2.1 修改 SSH 默认端口</h4>
 <p>参考 <a href="https://help.aliyun.com/document_detail/51644.html#title-0qk-cyo-ljc">修改Linux系统实例默认远程端口</a> 进行修改。</p>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份 sshd 服务配置文件</span>
 $ cp /etc/ssh/sshd_config /etc/ssh/sshd_config_bak
@@ -128,54 +175,147 @@ $ vim /etc/ssh/sshd_config
 <span class="c1"># 重启 sshd 服务</span>
 $ systemctl restart sshd
 
-<span class="c1"># 在自己的电脑上测试端口修改是否生效</span>
-<span class="c1"># 如已为该服务器在阿里云启用了安全组</span>
-<span class="c1"># 还需修改安全组中 SSH 对应端口号</span>
-</code></pre></div><p>CentOS 7 默认安装了 Firewalld，但默认没有启动，也没有开机启动，所以需要启动之后，依然按照这篇文章中的方法，将新的 sshd 服务端口号永久放行。</p>
-<h4 id="设置-ssh-空闲超时退出时间">设置 SSH 空闲超时退出时间</h4>
-<p>根据阿里云的加固建议，设置SSH空闲超时退出时间。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 编辑 sshd 服务配置文件</span>
-$ vi /etc/ssh/sshd_config
+<span class="c1"># 在本机 SSH 至服务器，测试端口修改是否生效</span>
+<span class="c1"># 如该服务器在阿里云中启用了安全组</span>
+<span class="c1"># 还需修改安全组中对应 SSH 端口号</span>
+</code></pre></div><p>TODO:</p>
+<p>待确认：CentOS 7 默认安装了 Firewalld，但默认没有启动，也没有开机启动，所以需要启动之后，依然按照这篇文章中的方法，将新的 sshd 服务端口号永久放行。</p>
+<h4 id="322-使用-ssh-配置文件用密钥对连接-linux-实例">3.2.2 使用 SSH 配置文件用密钥对连接 Linux 实例</h4>
+<p>按照文档 <a href="https://help.aliyun.com/document_detail/51798.html?#title-ii4-zmw-zxi">在支持SSH命令的环境中使用密钥对（通过config文件配置信息）</a> 中的流程，使用 SSH 密钥对，以 root 用户的身份连接至 Linux 实例。</p>
+<h4 id="323-配置新用户的-ssh-公钥">3.2.3 配置新用户的 SSH 公钥</h4>
+<p>再配置新用户的 SSH 公钥。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 切换至用户 www</span>
+$ su www
+<span class="c1"># 切换至当前用户的用户目录</span>
+$ <span class="nb">cd</span> ~
+<span class="c1"># 新建 .ssh 文件夹并设置文件夹权限</span>
+$ mkdir .ssh <span class="o">&amp;&amp;</span> chmod <span class="m">700</span> .ssh <span class="o">&amp;&amp;</span> <span class="nb">cd</span> .ssh
+<span class="c1"># 将 root 用户的公钥复制过来</span>
+$ sudo cat /root/.ssh/authorized_keys &gt; ./authorized_keys
+<span class="c1"># 设置文件为只读权限</span>
+$ chmod <span class="m">400</span> authorized_keys
+</code></pre></div><h4 id="324-测试新用户的-ssh-连接">3.2.4 测试新用户的 SSH 连接</h4>
+<p>在本机执行以下命令。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 将 User 字段后面的值由 root 改为 www</span>
+$ vi ~/.ssh/config
+<span class="c1"># 正常情况下，严格按照前面的流程操作，这里就能够以 www 用户的身份连接至服务器</span>
+$ ssh ecs
+</code></pre></div><h4 id="325-为-ssh-创立专门用户组">3.2.5 为 SSH 创立专门用户组</h4>
+<p>按照 <a href="https://github.com/imthenachoman/How-To-Secure-A-Linux-Server/blob/master/README.md">Create SSH Group For AllowGroups</a> 中给出的方法，为允许通过 SSH 连接至服务器的用户，创立专门的用户组。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 创立用户组</span>
+$ sudo groupadd sshusers
+<span class="c1"># 添加用户至用户组</span>
+$ sudo usermod -a -G sshusers www
+</code></pre></div><h4 id="326-加固-ssh-服务端配置">3.2.6 加固 SSH 服务端配置</h4>
+<p>参考 <a href="https://github.com/imthenachoman/How-To-Secure-A-Linux-Server#the-ssh-server">How-To-Secure-A-Linux-Server#the-ssh-server</a> 一节中的内容，以非 root 用户的身份，通过 SSH 连接至 Linux 实例后，手动修改 SSH 服务端配置文件，改成如下内容：</p>
+<pre><code>ListenAddress 0.0.0.0
+Port 38964
 
-<span class="c1"># 修改 ClientAliveInterval 的值为 600</span>
-<span class="c1"># 修改 ClientAliveCountMax 的值为 2</span>
-<span class="c1"># 然后保存并关闭文件</span>
+########################################################################################################
+# start settings from https://infosec.mozilla.org/guidelines/openssh#modern-openssh-67 as of 2019-01-01
+########################################################################################################
 
-<span class="c1"># 重启 sshd 服务</span>
-$ systemctl restart sshd
+# Supported HostKey algorithms by order of preference.
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+
+AuthorizedKeysFile .ssh/authorized_keys
+
+# LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was using to log in.
+LogLevel VERBOSE
+
+# Use kernel sandbox mechanisms where possible in unprivileged processes
+# Systrace on OpenBSD, Seccomp on Linux, seatbelt on MacOSX/Darwin, rlimit elsewhere.
+# Note: This setting is deprecated in OpenSSH 7.5 (https://www.openssh.com/txt/release-7.5)
+UsePrivilegeSeparation sandbox
+
+########################################################################################################
+# end settings from https://infosec.mozilla.org/guidelines/openssh#modern-openssh-67 as of 2019-01-01
+########################################################################################################
+
+# don't let users set environment variables
+PermitUserEnvironment no
+
+# Log sftp level file access (read/write/etc.) that would not be easily logged otherwise.
+Subsystem sftp internal-sftp -f AUTHPRIV -l INFO
+# Subsystem sftp /usr/libexec/openssh/sftp-server
+
+# only use the newer, more secure protocol
+# 只允许新的 SSH 协议
+Protocol 2
+
+# disable X11 forwarding as X11 is very insecure
+# you really shouldn't be running X on a server anyway
+# 禁用不安全的 X11 转发
+X11Forwarding no
+
+# disable port forwarding
+# 禁用端口转发
+AllowTcpForwarding no
+AllowStreamLocalForwarding no
+GatewayPorts no
+PermitTunnel no
+
+# don't allow login if the account has an empty password
+# 禁止空密码的用户登陆
+PermitEmptyPasswords no
+
+# ignore .rhosts and .shosts
+IgnoreRhosts yes
+
+# verify hostname matches IP
+UseDNS no
+
+Compression no
+TCPKeepAlive no
+AllowAgentForwarding no
+
+# don't allow .rhosts or /etc/hosts.equiv
+HostbasedAuthentication no
+
+# 禁止 root 用户登陆
+PermitRootLogin no
+# 禁止密码登录，即只允许密钥对登录
+PasswordAuthentication no
+# 只允许指定用户组登录
+AllowGroups sshusers
+
+ClientAliveCountMax 0
+ClientAliveInterval 600
+
+LoginGraceTime 30
+MaxAuthTries 2
+MaxSessions 2
+MaxStartups 2
+
+ChallengeResponseAuthentication no
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+UsePAM yes
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+AddressFamily inet
+SyslogFacility AUTHPRIV
+</code></pre><p>修改完成后，保存并关闭文件，然后重启 sshd 服务 <code>systemctl restart sshd</code> ，新的配置即可生效。</p>
+<p>可以分别用 root 和 www 两个用户，以密钥对方式登录，测试配置是否成功。</p>
+<h4 id="327-删除短的-diffie-hellman-密钥">3.2.7 删除短的 Diffie-Hellman 密钥</h4>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份 SSH 的 moduli 文件 /etc/ssh/moduli</span>
+$ sudo cp /etc/ssh/moduli /etc/ssh/moduli_bak
+<span class="c1"># 删除短的 Diffie-Hellman 密钥</span>
+$ sudo awk <span class="s1">&#39;$5 &gt;= 3071&#39;</span> /etc/ssh/moduli <span class="p">|</span> sudo tee /etc/ssh/moduli.tmp
+$ sudo mv /etc/ssh/moduli.tmp /etc/ssh/moduli
 </code></pre></div><h3 id="网络加固">网络加固</h3>
 <h4 id="配置安全组">配置安全组</h4>
-<p>此外，还需要在云服务器的安全组中，放行对应端口的入方向请求。</p>
-<h3 id="账号加固">账号加固</h3>
-<h4 id="提升账号所用密码的各项安全指标">提升账号所用密码的各项安全指标</h4>
-<p>参考 <a href="https://wiki.centos.org/HowTos/OS_Protection#Password_Policies">Password Policies</a> 和 <a href="https://www.techrepublic.com/article/enable-password-aging-on-linux-systems/">Enable password aging on Linux systems</a> 中的方法，为当前已存在的账号（root）和之后新创建的账号，设置修改密码的最小时间间隔（7 天），和密码失效时间（180 天）。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份密码配置文件</span>
-$ cp /etc/login.defs /etc/login.defs_bak
-
-<span class="c1"># 修改密码设置</span>
-$ vi /etc/login.defs
-<span class="c1"># 将 PASS_MAX_DAYS 的值改为 180</span>
-<span class="c1"># 将 PASS_MIN_DAYS 的值改为 7</span>
-<span class="c1"># 将最小密码长度 PASS_MIN_LEN 的值改为 16</span>
-<span class="c1"># 将密码到期前开始提醒的时间 PASS_WARN_AGE 的值设置为 14</span>
-<span class="c1"># 然后保存并关闭文件</span>
-
-<span class="c1"># 为已存在的 root 账号启用同样的设置</span>
-$ chage --maxdays <span class="m">180</span> root
-$ chage --mindays <span class="m">7</span> root
-$ chage --warndays <span class="m">14</span> root
-</code></pre></div><p><a href="https://www.techrepublic.com/article/enable-password-aging-on-linux-systems/">Enable password aging on Linux systems</a> 还提到了可以设置账号的 <code>inactive</code> 和 <code>expire</code> 时间，这里先不设置了。</p>
-<p>然后根据阿里云的加固建议，编辑 <code>/etc/security/pwquality.conf</code>，把 <code>minlen</code> （密码最小长度）设置为 16，把 <code>minclass</code> （至少包含小写字母、大写字母、数字、特殊字符等4类字符中等3类或4类）设置为 4。</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 备份密码安全文件</span>
-$ cp /etc/security/pwquality.conf /etc/security/pwquality.conf_bak
-
-<span class="c1"># 修改密码设置</span>
-$ vi /etc/security/pwquality.conf
-<span class="c1"># 将 minlen 的值改为 16</span>
-<span class="c1"># 将 minclass 的值改为 4</span>
-<span class="c1"># 然后保存并退出</span>
-</code></pre></div><p>再根据阿里云的加固建议，强制用户不重用最近使用的密码，降低密码猜测攻击风险。</p>
-<p>在 <code>/etc/pam.d/password-auth</code> 和 <code>/etc/pam.d/system-auth</code> 这两个文件中，均在 <code>password sufficient pam_unix.so</code> 这行的末尾配置 <code>remember</code> 参数为 24。原来的内容不用更改，只在行尾添加 <code>remember=24</code> 即可。</p></div>
+<p>此外，还需要在云服务器的安全组中，放行对应端口的入方向请求。</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
