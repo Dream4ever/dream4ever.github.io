@@ -16,8 +16,8 @@
       <description>&lt;h2 id=&#34;创建博客所需-repo&#34;&gt;创建博客所需 repo&lt;/h2&gt;
 &lt;p&gt;假设你在 GitHub 上的用户名是 &lt;code&gt;abcd&lt;/code&gt;，那么在 GitHub 上创建下面两个 repo：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;一个叫 &lt;code&gt;blog&lt;/code&gt;，用于存放 Hugo 博客的源文件&lt;/li&gt;
-&lt;li&gt;另一个叫 &lt;code&gt;abcd.github.io&lt;/code&gt;，用于存放 Hugo 编译生成的网页文件&lt;/li&gt;
+&lt;li&gt;一个叫 &lt;code&gt;blog&lt;/code&gt;，用于存放 Hugo 博客的原始文件，包括博客配置，文章的 md 文件等。&lt;/li&gt;
+&lt;li&gt;另一个叫 &lt;code&gt;abcd.github.io&lt;/code&gt;，用于存放 Hugo 编译生成的网页文件，访问博客时看到的就是网页文件。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;记得在创建第二个 repo 的时候，至少选上 README、.gitignore、LICENSE 三个文件中的一个，这样创建出来的 repo 就不是空的。&lt;/p&gt;
 &lt;p&gt;如果不这样做，将第二个 repo 添加为第一个 repo 的子模块的操作就会失败，处理起来会很麻烦。&lt;/p&gt;</description>
