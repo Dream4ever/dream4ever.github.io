@@ -312,9 +312,26 @@ $ sudo cp /etc/ssh/moduli /etc/ssh/moduli_bak
 <span class="c1"># 删除短的 Diffie-Hellman 密钥</span>
 $ sudo awk <span class="s1">&#39;$5 &gt;= 3071&#39;</span> /etc/ssh/moduli <span class="p">|</span> sudo tee /etc/ssh/moduli.tmp
 $ sudo mv /etc/ssh/moduli.tmp /etc/ssh/moduli
-</code></pre></div><h3 id="网络加固">网络加固</h3>
+</code></pre></div><h3 id="33-网络加固">3.3 网络加固</h3>
 <h4 id="配置安全组">配置安全组</h4>
-<p>此外，还需要在云服务器的安全组中，放行对应端口的入方向请求。</p></div>
+<p>此外，还需要在云服务器的安全组中，放行对应端口的入方向请求。</p>
+<h4 id="配置-firewalld">配置 FirewallD</h4>
+<p>先彻底禁用 iptables：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo systemctl stop iptables
+$ sudo systemctl mask iptables
+</code></pre></div><p>然后执行下面的命令启动 FirewallD</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo systemctl start firewalld
+</code></pre></div><p>结果终端连接立刻无响应了，猜测是 FirewallD 中没有 SSH 相关规则导致的。</p>
+<p>于是在浏览器中登录阿里云控制台，通过云助手发送命令 <code>sudo systemctl stop firewalld</code> 至服务器，先暂时停止 FirewallD。</p>
+<p>然后查看 FirewallD 的运行状态：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo systemctl status firewalld
+...
+Dec <span class="m">09</span> 11:37:03 ecs02 firewalld<span class="o">[</span>11787<span class="o">]</span>: WARNING: AllowZoneDrifting is enabled. This is considered an insecure configuration option. It will be removed in a future release. Please consider disabling it now.
+...
+</code></pre></div><p>上面的 <code>WARNING</code> 那一行建议用户关闭 <code>AllowZoneDrifting</code> 这个不全安的配置，上网搜索之后，按照 <a href="https://stackoverflow.com/questions/61402334/allowzonedrifting-firewalld-what-is-it-and-should-i-disable-it">AllowZoneDrifting - Firewalld: What is it and should I disable it?</a> 中所说的，将 <code>/etc/firewalld/firewalld.conf</code> 文件中 <code>AllowZoneDrifting</code> 的值由 <code>yes</code> 改为 <code>no</code>。</p>
+<p>另外，上面的提示文字说这个不安全的配置在未来的某个版本中可能删除，于是将 FirewallD 升级到最新版：</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo yum update firewalld
+</code></pre></div><p>然后按照 DigitalOcean 的教程 <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-using-firewalld-on-centos-7">How To Set Up a Firewall Using FirewallD on CentOS 7</a> 来配置 FirewallD：</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
