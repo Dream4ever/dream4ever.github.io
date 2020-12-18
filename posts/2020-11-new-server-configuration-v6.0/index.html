@@ -373,18 +373,18 @@ $ firewall-cmd --zone<span class="o">=</span>public --permanent --service<span c
 $ reboot
 </code></pre></div><p>执行了上面的命令之后，就可以从任意电脑上通过 SSH 连接服务器了。</p>
 <h2 id="六-配置-fail2ban">六、 配置 fail2ban</h2>
-<h3 id="60-fail2ban-的意义">6.0 fail2ban 的意义</h3>
+<h3 id="61-fail2ban-的意义">6.1 fail2ban 的意义</h3>
 <p>即使在前面的步骤中，启用了 SSH 密钥登录，禁用了 SSH 密码登录，fail2ban 也非常有用。</p>
 <p>因为合理配置的 fail2ban，不只是可以屏蔽非法的 SSH 登录请求。对于很多网上的自动扫描的机器人，被 fail2ban 屏蔽之后，有可能在一段时间之内就不会再尝试扫描这台服务器。</p>
 <p>fail2ban 功能极其丰富，它本质上是通过监控各种日志文件，找出符合规则的记录，然后将记录中的 IP 加以屏蔽。这样一来，不只是 SSH，像 Nginx、Wordpress 之类的应用，也是可以屏蔽的，比如屏蔽掉那些尝试暴力登录网站的请求等等。</p>
-<h3 id="61-安装-fail2ban">6.1 安装 fail2ban</h3>
+<h3 id="62-安装-fail2ban">6.2 安装 fail2ban</h3>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo yum update <span class="o">&amp;&amp;</span> sudo yum install epel-release
 $ sudo yum install fail2ban
-</code></pre></div><h3 id="62-启动-fail2ban">6.2 启动 fail2ban</h3>
+</code></pre></div><h3 id="63-启动-fail2ban">6.3 启动 fail2ban</h3>
 <div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">$ sudo systemctl start fail2ban
 <span class="c1"># 设置 fail2ban 开机启动</span>
 $ sudo systemctl <span class="nb">enable</span> fail2ban
-</code></pre></div><h3 id="63-fail2ban-基础配置">6.3 fail2ban 基础配置</h3>
+</code></pre></div><h3 id="64-fail2ban-基础配置">6.4 fail2ban 基础配置</h3>
 <p><code>fail2ban.conf</code> 包含了 fail2ban 的默认配置，并且每次升级时会覆盖该文件。如果需要修改该文件中的配置，合理的方式是将该文件复制一份，并重命名为 <code>fail2ban.local</code>，这样就不会被升级影响了。</p>
 <p>不过在后面的配置中，不需要修改这个文件，所以这一步操作不做也可以。</p>
 <p>然后再将 Jail 配置文件 <code>jail.conf</code> 也复制一份并重命名为 <code>jail.local</code>，避免在软件升级时被覆盖。</p>
@@ -403,7 +403,7 @@ banaction = firewallcmd-ipset
 banaction_allports = firewallcmd-ipset
 </code></pre><p>上面的字段 <code>bantime</code> 原本设置为 <code>10y</code>，也就是 10 年。结果在查看 fail2ban 的日志 <code>/var/log/fail2ban.log</code> 时，发现每次在屏蔽登录失败的 IP 时，都会报 <code>stderr: &quot;ipset v7.1: Syntax error: '315576000' is out of range 0-2147483&quot;</code> 这么一个错误，原来是给这个字段设置的值超出了它允许的最大值。</p>
 <p>将最大值 <code>2147483</code> 换算成天，差不多是 24 天，为了保险期间，就把 <code>bantime</code> 的值设置为 <code>14d</code>，也就是登录失败一次，就屏蔽两个星期，这已经够久了。</p>
-<h3 id="64-fail2ban-具体服务配置">6.4 fail2ban 具体服务配置</h3>
+<h3 id="65-fail2ban-具体服务配置">6.5 fail2ban 具体服务配置</h3>
 <p>新建 <code>/etc/fail2ban/jail.d/sshd.local</code> 文件，用于配置 SSH 服务的屏蔽设置，具体配置如下：</p>
 <pre><code>[sshd]
 
@@ -417,7 +417,7 @@ logpath = /var/log/secure
 </code></pre><p>因为 <code>jail.local</code> 这个通用配置文件中的 <code>enabled</code> 字段值为 <code>false</code>，所以需要在这里将该字段值设置为 <code>true</code>，来启用 SSHD 服务的安全防护。</p>
 <p><code>port</code> 字段则设置为 SSHD 服务的自定义端口。</p>
 <p><code>logpath</code> 字段设置为 <code>/var/log/secure</code>，这是 CentOS 下的登录日志文件所在位置。</p>
-<h3 id="65-参考资料">6.5 参考资料</h3>
+<h3 id="66-参考资料">6.6 参考资料</h3>
 <ul>
 <li><a href="https://www.linode.com/docs/guides/using-fail2ban-to-secure-your-server-a-tutorial/">Using Fail2ban to Secure Your Server - A Tutorial</a></li>
 <li><a href="https://www.howtoforge.com/tutorial/how-to-install-fail2ban-on-centos/#add-a-jail-file-to-protect-ssh">Add a jail file to protect SSH</a></li>
