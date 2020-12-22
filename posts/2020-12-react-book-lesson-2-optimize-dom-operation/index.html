@@ -96,7 +96,64 @@
                         <h2><a href='/posts/2020-12-react-book-lesson-2-optimize-dom-operation/'>前端组件化（二）：优化 DOM 操作</a></h2>
                         <span class="date">2020.12.22</span>
                     </div>
-                    <div class="post_content markdown"><p>原文链接：<a href="http://huziketang.mangojuice.top/books/react/lesson3">前端组件化（二）：优化 DOM 操作</a></p></div>
+                    <div class="post_content markdown"><p>原文链接：<a href="http://huziketang.mangojuice.top/books/react/lesson3">前端组件化（二）：优化 DOM 操作</a></p>
+<p>在上一节的代码中， <code>changeLikeText</code> 函数既包含改变状态 <code>isLiked</code> 的操作，又包含改变状态对应 DOM 文字的操作。在实际开发中，一个组件的显示形态往往由多个状态决定，如果代码既要改变各个状态，又要去修改各个 DOM，就很容易导致代码可维护性变差、容易出错。那要如何改变这种局面呢？</p>
+<h2 id="状态改变--构建新的-dom-元素更新页面">状态改变 → 构建新的 DOM 元素更新页面</h2>
+<p>一种最简单粗暴的解决方案，就是状态一旦改变，就重新调用 <code>render</code> 方法生成新的 DOM，这样既不需要手动修改 DOM，又能够保证状态可以随时更新到 DOM 上。</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">LikeButton</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">isLiked</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="nx">setState</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">state</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">()</span>
+  <span class="p">}</span>
+  
+  <span class="nx">changeLikedText</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="nx">isLiked</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+  
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">createDOMFromString</span><span class="p">(</span><span class="sb">`
+</span><span class="sb">    &lt;button class=&#34;like-btn&#34;&gt;
+</span><span class="sb">      &lt;span class=&#34;like-text&#34;&gt;</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span> <span class="o">?</span> <span class="s1">&#39;取消&#39;</span> <span class="o">:</span> <span class="s1">&#39;点赞&#39;</span><span class="si">}</span><span class="sb">&lt;/span&gt;
+</span><span class="sb">      &lt;span&gt;👍&lt;/span&gt;
+</span><span class="sb">    &lt;button&gt;
+</span><span class="sb">    `</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">changeLikedText</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="kc">false</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">el</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>上面的代码和之前的版本相比，改动如下：</p>
+<ol>
+<li><code>render</code> 里根据 <code>state</code> 的值不同，自动显示对应的文字，这里也显示出了 ES6 模板字符串的方便之处。</li>
+<li>新增了 <code>setState</code> 函数，用传入的 <code>state</code> 覆盖实例当前的 <code>state</code> ，并重新调用 <code>render</code> 方法。</li>
+<li>用户点击按钮触发事件，事件调用 <code>changeLikedText</code> 函数，该函数调用 <code>setState</code> ， <code>setState</code> 再调用 <code>render</code> ，<code>render</code> 再根据 <code>state</code> 的值重新构建 DOM 元素。</li>
+</ol>
+<p>这样一来，DOM 操作就完全交给 <code>setState</code> 来自动操作，无需再手动修改了。</p>
+<h2 id="重新插入新的-dom-元素">重新插入新的 DOM 元素</h2>
+<p>除了上面的修改，还需要在组件外能够知道组件发生改变，并且删除旧的 DOM 并插入新的 DOM 才行。通知改变的发生也在 <code>setState</code> 中进行：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">setState</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">oldEl</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">el</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">state</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">()</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">onStateChange</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">onStateChange</span><span class="p">(</span><span class="nx">oldEl</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>然后在使用该组件时，监听对应的 <code>onStateChange</code> 事件：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">const</span> <span class="nx">likeButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LikeButton</span><span class="p">()</span>
+<span class="nx">wrapper</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">likeButton</span><span class="p">.</span><span class="nx">render</span><span class="p">())</span> <span class="c1">// 首次插入 DOM 元素
+</span><span class="c1"></span><span class="nx">likeButton</span><span class="p">.</span><span class="nx">onStateChange</span><span class="p">(</span><span class="nx">oldEl</span><span class="p">,</span> <span class="nx">newEl</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">wrapper</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">newEl</span><span class="p">,</span> <span class="nx">oldEl</span><span class="p">)</span> <span class="c1">// 插入新的 DOM 元素
+</span><span class="c1"></span>  <span class="nx">wrapper</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">oldEl</span><span class="p">)</span> <span class="c1">// 删除旧的 DOM 元素
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><p>这样一来，<code>setState</code> 每次都会调用 <code>onStateChange</code> 方法，而这个方法是实例化之后被设置的，所以可以根据自己的需求来设置它。在上面的代码中，每当 <code>setState</code> 构造完新的 DOM 元素之后，就会通过 <code>onStateChange</code> 告知外部插入新的 DOM 元素，然后删除旧的 DOM 元素，这样页面就更新了。</p>
+<p>不过由于每次 <code>setState</code> 都要重新构造、新增、删除 DOM 元素，会导致浏览器进行大量的重排，严重影响性能，所以 React 和 Vue 都引入了 Virtual-DOM 策略来解决这个问题。</p>
+<p>上面这个组件的不足之处在于，如果我要再写一个评论组件，那么 <code>setState</code> 方法我还要再重写一遍，而这些通用的部分其实都可以抽象出来进行公用的，下一节就讲讲如何将其进行抽象。</p></div>
                     <div class="post_footer">
                         
                         <div class="meta">
