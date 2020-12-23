@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>React 小书学习笔记：组件的组合、嵌套和组件树</title>
+      <link>https://www.hewei.in/posts/2020-12-react-book-lesson-6-components/</link>
+      <pubDate>Wed, 23 Dec 2020 21:28:17 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-6-components/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson8&#34;&gt;组件的组合、嵌套和组件树&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>React 小书学习笔记：使用 JSX 描述 UI 信息</title>
       <link>https://www.hewei.in/posts/2020-12-react-book-lesson-4-describe-ui-with-jsx/</link>
       <pubDate>Wed, 23 Dec 2020 12:22:29 +0800</pubDate>
