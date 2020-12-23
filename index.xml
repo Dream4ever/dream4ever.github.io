@@ -6,7 +6,25 @@
     <description>Recent content on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Dec 2020 21:28:17 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 23 Dec 2020 22:12:35 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>React 小书学习笔记：事件监听</title>
+      <link>https://www.hewei.in/posts/2020-12-react-book-lesson-7-event-listen/</link>
+      <pubDate>Wed, 23 Dec 2020 22:12:35 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-7-event-listen/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson9&#34;&gt;事件监听&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>React 小书学习笔记：组件的组合、嵌套和组件树</title>
+      <link>https://www.hewei.in/posts/2020-12-react-book-lesson-6-component-tree/</link>
+      <pubDate>Wed, 23 Dec 2020 21:52:58 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-6-component-tree/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson8&#34;&gt;组件的组合、嵌套和组件树&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>React 小书学习笔记：组件的 render 方法</title>
       <link>https://www.hewei.in/posts/2020-12-react-book-lesson-5-render-method/</link>
@@ -14,15 +32,6 @@
       
       <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-5-render-method/</guid>
       <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson7&#34;&gt;组件的 render 方法&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>React 小书学习笔记：组件的组合、嵌套和组件树</title>
-      <link>https://www.hewei.in/posts/2020-12-react-book-lesson-6-component-tree/</link>
-      <pubDate>Wed, 23 Dec 2020 21:28:17 +0800</pubDate>
-      
-      <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-6-component-tree/</guid>
-      <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson8&#34;&gt;组件的组合、嵌套和组件树&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
