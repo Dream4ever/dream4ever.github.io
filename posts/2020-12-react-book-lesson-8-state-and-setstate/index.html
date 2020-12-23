@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="何伟" />
+	
+	
+	
+	<title>React 小书学习笔记：组件的 state 和 setState ｜ 岁月留痕</title>
+	
+    
+    
+    <meta name="description" content="原文链接：组件的 state 和 setState
+" />
+    
+
+    
+
+	
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://www.hewei.in/css/highlight.css" />
+
+    
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/">首页</a>
+            </li>
+            
+            <li>
+                <a href="/posts/">归档</a>
+            </li>
+            
+            <li>
+                <a href="/tags/">标签</a>
+            </li>
+            
+            <li>
+                <a href="/about/">我</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://www.hewei.in/">
+                    <span>岁月留痕</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/Dream4ever" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                <a href="https://www.hewei.in/index.xml" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/posts/2020-12-react-book-lesson-8-state-and-setstate/'>React 小书学习笔记：组件的 state 和 setState</a></h2>
+                        <span class="date">2020.12.23</span>
+                    </div>
+                    <div class="post_content markdown"><p>原文链接：<a href="http://huziketang.mangojuice.top/books/react/lesson10">组件的 state 和 setState</a></p>
+<h2 id="state">state</h2>
+<p>前面讲过的点赞按钮的例子，用了一个属性来保存按钮是否被点赞，React 中的 <code>state</code> 就是专门用来存储这种可变化的状态的，代码如下：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Main</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">()</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">isLiked</span><span class="o">:</span> <span class="kc">false</span> <span class="p">}</span>
+  <span class="p">}</span>
+  
+  <span class="nx">changeState</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="nx">isLiked</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">changeState</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)}</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span> <span class="o">?</span> <span class="s1">&#39;取消&#39;</span> <span class="o">:</span> <span class="s1">&#39;点赞&#39;</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="err">/h2&gt;;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>组件中的 <code>state</code> 对象在构造函数中初始化，里面保存了 <code>isLiked</code> 属性。而 <code>render</code> 函数会根据 <code>isLiked</code> 属性值的不同，分别显示“取消”或者“点赞”。</p>
+<h2 id="setstate-接受对象参数">setState 接受对象参数</h2>
+<p>上面事件监听函数的回调，调用了 <code>setState</code> 方法，在用户每次点击 DOM 元素的时候，更改 <code>isLiked</code> 属性的值。</p>
+<p><code>setState</code> 方法是由父类提供的， <strong>事件监听函数的回调内调用该函数时，React 会更新组件的状态 <code>state</code> ，然后 自动 重新调用 <code>render</code> 方法，并把渲染的最新内容显示在页面上。</strong></p>
+<p>如果不调用 <code>setState</code> 方法，而是直接用 <code>this.state = xxx</code> 的方式来修改，React 是没法知道你修改了组件的状态的，也就没办法更新。所以一定要用 React 提供的 <code>setState</code> 方法， <strong>它接受一个对象或者函数作为参数</strong> 。</p>
+<p>给 <code>setState</code> 传入对象的话，只需要传入更改的那部分就行，不用传入整个对象。</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">  <span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">()</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Jimmy&#39;</span><span class="p">,</span>
+      <span class="nx">isLiked</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></div><p>比如对于上面的状态，如果只修改 <code>isLiked</code> 属性的话，是不需要把 <code>name</code> 一起传入的。</p>
+<h2 id="setstate-接受函数参数">setState 接受函数参数</h2>
+<p>调用 <code>setState</code> 的时候， <strong>React 并不会立刻修改 <code>state</code></strong> ，而是把这个对象放到一个更新队列里面，之后才会从队列中吧新的状态提取出来再合并到 <code>state</code> 里，然后才触发组件更新。比如下面的代码：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">  <span class="nx">changeState</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span>
+      <span class="nx">isLiked</span><span class="o">:</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span>
+    <span class="p">})</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span><span class="p">)</span>
+  <span class="p">}</span>
+</code></pre></div><p>上面的代码在实际执行的过程中，会发现 <code>setState</code> 前后输出的值是相同的，就是因为 React 的 <code>setState</code> 先把传进来的状态缓存起来，之后才会更新到 <code>state</code> 上，所以这里才会在执行完 <code>setState</code> 之后，获取到的还是旧的 <code>isLiked</code> 的值。</p>
+<p>那么如果需要立刻获取到最新的 <code>state</code> 对象，就需要把函数传入 <code>setState</code> 了：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js">  <span class="nx">changeState</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="nx">isLiked</span><span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="p">})</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span><span class="p">)</span> <span class="c1">// =&gt; 3
+</span><span class="c1"></span>      <span class="k">return</span> <span class="p">{</span> <span class="nx">isLiked</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="p">})</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span><span class="p">)</span> <span class="c1">// =&gt; 3
+</span><span class="c1"></span>      <span class="k">return</span> <span class="p">{</span> <span class="nx">isLiked</span><span class="o">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">isLiked</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+</code></pre></div><p>上面的代码，在每一次的 <code>setState</code> 中，都会用前一次的、也是最新的 <code>state</code> 进行运算。只不过如果像上面的代码那样，尝试输出每一步的 <code>isLiked</code> 的值，会发现输出的还是最后的值，很有意思，以后有空了可以研究研究。</p>
+<h2 id="setstate-合并">setState 合并</h2>
+<p>上面虽然执行了三次 <code>setState</code> ，但组件却只会渲染一次，因为在 React 内部会把 JavaScript 事件循环消息队列的同一个消息中的 <code>setState</code> 进行合并之后，再重新渲染组件。</p>
+<p>深层的原理目前无需过多纠结，只需要记住，在使用 React 的时候，不需要担心多次使用 <code>setState</code> 会带来性能问题。</p></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Note 学习笔记</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                
+<div class="doc_comments">
+    <div class="comments_block_title">发表评论</div>
+    <div id="vcomments"></div>
+</div>
+
+<link rel="stylesheet" href="https://www.hewei.in/css/comments.css" />
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
+<script type="text/javascript">
+    new Valine({
+        el: '#vcomments',
+        appId: '6kGh7JpRLb89n7mDsx4LmntN-gzGzoHsz',
+        appKey: 'kWKa5LtKrMR1sMPfRl5Wzx4r',
+        placeholder: '',
+        visitor: 'true',
+    })
+</script>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://www.hewei.in/js/jquery-3.5.1.min.js"></script>
+<link href="https://www.hewei.in/css/fancybox.min.css" rel="stylesheet">
+<script src="https://www.hewei.in/js/fancybox.min.js"></script>
+<script src="https://www.hewei.in/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>
