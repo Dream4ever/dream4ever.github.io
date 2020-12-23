@@ -97,53 +97,64 @@
                         <span class="date">2020.12.23</span>
                     </div>
                     <div class="post_content markdown"><p>原文链接：<a href="http://huziketang.mangojuice.top/books/react/lesson9">事件监听</a></p>
-<p>前面我们定义了 <code>Header</code> 组件，这里我们再定义一个 <code>Title</code> 组件，然后在 <code>Header</code> 组件里面使用 <code>Title</code> 组件来显示标题：</p>
-<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Title</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
-  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">React</span> <span class="nx">小书</span><span class="o">&lt;</span><span class="err">/h1&gt;;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kr">class</span> <span class="nx">Header</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
-  <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">Title</span> <span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="err">/div&gt;;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>上面的代码可以正常显示标题内容，是因为 React 支持组件的组合、嵌套，可以在一个组件的 <code>render</code> 方法中将其中所包含组件的 JSX 渲染出来。有了组件的组合、嵌套，就有了无限可能。</p>
-<p>有一点要注意： <strong>自定义组件名称一定要首字母大写，普通的 HTML 标签则要小写</strong> 。</p>
-<p>组件可以和 HTML 一样组合、嵌套，构成一个组件树。最后再经过编译、渲染，就会形成一个完整的 DOM 树，基本上就是我们最终所看到的页面了。可以通过观察下面这个实例，对组件的组合及嵌套有基本的认识：</p>
+<p>React 中要监听事件的话，给对应的元素加上 <code>onClick</code> 、<code>onKeyDown</code> 之类的属性和对应的回调函数即可：</p>
 <div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Header</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">handleClick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;clicked header&#39;</span><span class="p">)</span>
+  <span class="p">}</span>
   <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">Header</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleClick</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">Header</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="kr">class</span> <span class="nx">Main</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</code></pre></div><p>因为 React 已经封装了一系列的 <code>on*</code> 属性，需要让某个元素监听某种事件的时候，像上面那样添加对应属性和回调函数就行，也不需要考虑浏览器兼容问题。</p>
+<p>在 <a href="https://reactjs.org/docs/events.html">SyntheticEvent - React</a> 这个页面中，列出了 React 所支持的各类监听事件的名称。</p>
+<p>有一点要注意，在没有做特殊处理时，<strong>这些 <code>on*</code> 监听事件只能用在普通的 HTML 标签上，不能用在组件上</strong> 。</p>
+<h2 id="event-对象">event 对象</h2>
+<p>React 将事件监听函数中的 <code>event</code> 这个浏览器原生对象也进行了封装，以便对外提供统一的 API 和属性。这个 <code>event</code> 对象是符合 W3C 标准的，具有类似 <code>event.preventDefault</code> 这种常用的方法。</p>
+<p>这次来尝试当用户点击 HTML 元素的时候，把它的 <code>innerHTML</code> 打印出来：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Main</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">printInnerHTML</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">)</span>
+  <span class="p">}</span>
   <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">main</span> <span class="nx">content</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">printInnerHTML</span><span class="p">}</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">main</span> <span class="nx">content</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="kr">class</span> <span class="nx">Footer</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</code></pre></div><h2 id="事件中的-this">事件中的 this</h2>
+<p>一般来说，类的实例方法里的 <code>this</code> 指的是这个实例本身。但是如果在 React 组件里定义的方法中打印 <code>this</code> 的话，得到的却是 <code>null</code> 或者 <code>undefined</code> 。</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="p">...</span>
+  <span class="nx">printInnerHTML</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> <span class="c1">// =&gt; null or undefined
+</span><span class="c1"></span>  <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div><p>这是因为虽然在组件里调用组件内定义的方法时，写的是 <code>this.printInnerHTML</code> 这种形式，但 React 其实是直接通过函数调用，而不是通过对象方法的方式来调用的，所以在事件监听函数内，默认是不能通过 <code>this</code> 获取到实例的。</p>
+<p>如果想要在时间监听函数内获取到当前实例，就需要手动将实例方法 <code>bind</code> 到当前实例上，再传给 React。</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Main</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">printInnerHTML</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+  <span class="p">}</span>
   <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">footer</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">printInnerHTML</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">main</span> <span class="nx">content</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="kr">class</span> <span class="nx">Index</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+</code></pre></div><p>这里的 <code>bind</code> 会把实例方法绑定到当前实例上，然后再把绑定后的函数传给 React 的 <code>onClick</code> 事件监听。</p>
+<p>此外，<code>bind</code> 不只是可以传入 <code>this</code> ，还可以传入别的参数：</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kr">class</span> <span class="nx">Main</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
+  <span class="nx">printInnerHTML</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+  <span class="p">}</span>
   <span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
-      <span class="o">&lt;</span><span class="nx">Header</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="nx">Main</span> <span class="o">/&gt;</span>
-      <span class="o">&lt;</span><span class="nx">Footer</span> <span class="o">/&gt;</span>
-    <span class="o">&lt;</span><span class="err">/div&gt;;</span>
+    <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h2</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">printInnerHTML</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;hello world!&#39;</span><span class="p">)}</span><span class="o">&gt;</span><span class="nx">This</span> <span class="nx">is</span> <span class="nx">main</span> <span class="nx">content</span><span class="o">&lt;</span><span class="err">/h2&gt;;</span>
   <span class="p">}</span>
 <span class="p">}</span>
-
-<span class="nx">React</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">Index</span> <span class="o">/&gt;</span><span class="p">,</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">));</span>
-</code></pre></div></div>
+</code></pre></div><p>这种 <code>bind</code> 模式在 React 的事件监听中非常常见，它不仅可以把事件监听方法中的 <code>this</code> 绑定到当前组件实例上，还可以在渲染列表元素的时候，帮我们把列表元素传入事件监听函数里面，这个在后面会讲到。</p>
+<p>如果对于 JavaScript 的 <code>this</code> 模式或者 <code>bind</code> 函数的使用方法不熟悉，可以去 MDN 上补充学习相关知识：<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this">this | MDN</a>，<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind">bind | MDN</a>。</p>
+<h2 id="总结">总结</h2>
+<ol>
+<li>React 为我们包装好了 <code>on*</code> 监听事件，但默认只能用在 HTML 标签上。</li>
+<li>React 支持监听函数的 <code>event</code> 对象。</li>
+<li>可通过 <code>bind</code> 将组件实例与 <code>this</code> 相绑定。</li>
+</ol></div>
                     <div class="post_footer">
                         
                         <div class="meta">
