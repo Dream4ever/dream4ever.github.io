@@ -94,6 +94,71 @@
 
 <div class="post animated fadeInDown">
     <div class="post_title">
+        <h2><a href='/posts/2020-07-config-gitlab-in-docker/'>Docker 中部署 GitLab</a></h2>
+    </div>
+    
+    <div class="list">
+        <div class="post_content markdown">
+            <p><h2 id="下载-gitlab-镜像">下载 GitLab 镜像</h2>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">docker pull gitlab/gitlab-ce
+</code></pre></div><p>镜像链接：<a href="https://hub.docker.com/r/gitlab/gitlab-ce/">https://hub.docker.com/r/gitlab/gitlab-ce/</a></p>
+<h2 id="安装-docker-compose">安装 Docker Compose</h2>
+<p>官方教程：<a href="https://docs.docker.com/compose/install/">Install Docker Compose</a></p>
+<h2 id="创建-docker-compose-配置文件">创建 docker-compose 配置文件</h2>
+<p>在主机的 <code>/etc/gitlab</code> 目录下创建 GitLab 容器的配置文件 <code>docker-compose.yml</code>。</p>
+<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">web:
+  image: <span class="s1">&#39;gitlab/gitlab-ce:latest&#39;</span>
+  container_name: gitlab
+  restart: always
+  hostname: <span class="s1">&#39;code.upp.com&#39;</span>
+  environment:
+    GITLAB_OMNIBUS_CONFIG: <span class="p">|</span>
+      external_url <span class="s1">&#39;http://code.upp.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;username@mail.domain.com&#39;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtpdm.aliyun.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">80</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;username@mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;smtp_password&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;mail.domain.com&#34;</span>
+      gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&#34;login&#34;</span>
+  ports:
+    - <span class="s1">&#39;80:80&#39;</span>
+    - <span class="s1">&#39;443:443&#39;</span>
+  volumes:
+    - <span class="s1">&#39;$GITLAB_HOME/config:/etc/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/logs:/var/log/gitlab&#39;</span>
+    - <span class="s1">&#39;$GITLAB_HOME/data:/var/opt/gitlab&#39;</span>
+</code></pre></div><p>同时修改电脑上的 DNS，设置 <code>code.upp.com</code> 为运行 GitLab 服务器所对应的 IP。</p>......</p>
+        </div>
+    </div>
+    
+    <div class="post_footer">
+        <div class="meta">
+            <div class="info">
+                <span class="field">
+                    <i class="ri-map-pin-time-line"></i>
+                    <span class="date">2020.07.20</span>
+                </span>
+                
+                <span class="field tags">
+                    <i class="ri-stack-line"></i>
+                    
+                    <a href="https://www.hewei.in/tags/gitlab/">Gitlab</a>
+                    
+                    <a href="https://www.hewei.in/tags/docker/">Docker</a>
+                    
+                    <a href="https://www.hewei.in/tags/tutorial-%E6%95%99%E7%A8%8B/">Tutorial 教程</a>
+                    
+                </span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="post animated fadeInDown">
+    <div class="post_title">
         <h2><a href='/posts/2020-02-new-server-configuration-v5.0/'>云服务器配置笔记 v5.0</a></h2>
     </div>
     

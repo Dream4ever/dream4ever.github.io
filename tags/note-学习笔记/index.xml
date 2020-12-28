@@ -6,7 +6,16 @@
     <description>Recent content in Note 学习笔记 on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Dec 2020 22:43:51 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Dec 2020 12:39:28 +0800</lastBuildDate><atom:link href="https://www.hewei.in/tags/note-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>React 小书学习笔记：配置组件的 props</title>
+      <link>https://www.hewei.in/posts/2020-12-react-book-lesson-9-set-props-of-component/</link>
+      <pubDate>Thu, 24 Dec 2020 12:39:28 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2020-12-react-book-lesson-9-set-props-of-component/</guid>
+      <description>&lt;p&gt;原文链接：&lt;a href=&#34;http://huziketang.mangojuice.top/books/react/lesson11&#34;&gt;配置组件的 props&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>React 小书学习笔记：组件的 state 和 setState</title>
       <link>https://www.hewei.in/posts/2020-12-react-book-lesson-8-state-and-setstate/</link>
