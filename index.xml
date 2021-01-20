@@ -6,7 +6,16 @@
     <description>Recent content on 岁月留痕</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 24 Dec 2020 12:39:28 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Jan 2021 22:57:27 +0800</lastBuildDate><atom:link href="https://www.hewei.in/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vue-Cli 及 Ant Design Vue Pro 开发笔记</title>
+      <link>https://www.hewei.in/posts/2021-01-vue-cli-and-ant-design-vue-pro-note/</link>
+      <pubDate>Wed, 20 Jan 2021 22:57:27 +0800</pubDate>
+      
+      <guid>https://www.hewei.in/posts/2021-01-vue-cli-and-ant-design-vue-pro-note/</guid>
+      <description>在各个 commit 之间切换 可以将当前分支 checkout 到另一个分支上，然后在另一个分支中，在各个 commit 之间切换，这样不会影响当前分支，还能够看到各个 commit 项目的状态。 看完</description>
+    </item>
+    
     <item>
       <title>React 小书学习笔记：配置组件的 props</title>
       <link>https://www.hewei.in/posts/2020-12-react-book-lesson-9-set-props-of-component/</link>
